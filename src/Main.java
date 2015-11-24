@@ -1,6 +1,11 @@
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	
+    	Chessboard chessboard = new Chessboard();
+    	while (chessboard.gameIsOver()==false) {
+    		//getInput;
+    	}
     }
+    
 }
