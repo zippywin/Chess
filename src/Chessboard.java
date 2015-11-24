@@ -20,4 +20,11 @@ public class Chessboard {
 	public boolean gameIsOver() {
 		return true;
 	}
+	
+	/**
+	 *  Given two squares, moves the piece in square 1 to square2
+	 */
+	public void makeMove(String square1, String square2) {
+		
+	}
 }
