@@ -1,0 +1,6 @@
+# Ignored files here.
+# Ignore Intellij-specific files
+.idea
+*.iml
+*.MF
+out
