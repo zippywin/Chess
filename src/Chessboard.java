@@ -14,13 +14,14 @@ public class Chessboard {
 	}
 	
 	/**
-	 * Returns true if the game is over
-	 * @return true if the game is over
+	 * Given a square, returns the piece on that square
+	 * @param square the square being queried
+	 * @return the piece on that square, if any. Null if none exists
 	 */
-	public boolean gameIsOver() {
-		return true;
+	public Piece getPiece(String square) {
+		return null;
 	}
-	
+
 	/**
 	 *  Given two squares, moves the piece in square 1 to square2
 	 */

@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
 	
-    	Chessboard chessboard = new Chessboard();
-    	while (chessboard.gameIsOver()==false) {
+    	Game g = new Game();
+    	while (g.gameIsOver()==false) {
     		//output chessboard to terminal
     		//get user input;
     	}
