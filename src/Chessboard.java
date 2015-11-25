@@ -5,12 +5,22 @@
  */
 public class Chessboard {
 	
+	private Square[][] board;
+	
 	/**
 	 * Initializes a default chessboard
 	 */
 	public Chessboard() {
-		//Create array
-		//Create pieces
+		board = new Square[8][8];
+		for (int i = 0; i < 8; i++) {
+			char file = 'A';
+			file += i;
+			for (int j = 0; j < 8; j++) {
+				int rank = j;
+				board[i][j] = new Square(file,rank);
+			}
+		}
+		
 	}
 	
 	/**
@@ -28,4 +38,13 @@ public class Chessboard {
 	public void makeMove(String square1, String square2) {
 		
 	}
+
+	/**
+	 * Prints out the chessboard
+	 */
+	public void printBoard() {
+		
+	}
+	
+	
 }

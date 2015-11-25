@@ -13,8 +13,16 @@ public interface Piece {
 	public String getLocation();
 	
 	/**
-	 * Returns an array of valid moves
-	 * @return an array of valid moves
+	 * Returns true if the piece can move to the given square
+	 * @param square the square to move to
+	 * @return true if moving to the square is valid 
 	 */
-	public String[] getValidMoves();
+	public boolean isValidMove(String square);
+	
+	/**
+	 * Moves the piece to the provided square
+	 * Assuming that it is a valid move
+	 * @param square the square to move to
+	 */
+	public void move(String square);
 }

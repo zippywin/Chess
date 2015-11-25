@@ -9,6 +9,8 @@ public class Game {
 	private Chessboard board;
 	private int turn;
 	private int activePlayer;
+	public static int WHITE = 0;
+	public static int BLACK = 1;
 	
 	/**
 	 * Creates a new game
@@ -16,7 +18,7 @@ public class Game {
 	public Game() {
 		board = new Chessboard();
 		turn = 0;
-		activePlayer = 1;
+		activePlayer = Game.WHITE;
 	}
 	
 	/**
@@ -42,6 +44,11 @@ public class Game {
 	 */
 	public void makeMove(String square1, String square2) {
 		board.makeMove(square1, square2);
+		if (activePlayer == Game.WHITE) {
+			activePlayer = Game.BLACK;
+		} else {
+			activePlayer = Game.WHITE;
+		}
 	}
 	
 	/**
@@ -52,4 +59,10 @@ public class Game {
 		return true;
 	}
 	
+	/**
+	 * Prints out the chessboard 
+	 */
+	public void printGame() {
+		board.printBoard();
+	}
 }

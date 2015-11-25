@@ -25,7 +25,13 @@ public class King implements Piece {
     }
 
     @Override
-    public String[] getValidMoves() {
-        return new String[0];
+    public boolean isValidMove(String sq) {
+        return true;
     }
+
+	@Override
+	public void move(String square) {
+		// TODO Auto-generated method stub
+		
+	}
 }
