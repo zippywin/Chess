@@ -25,4 +25,11 @@ public interface Piece {
 	 * @param square the square to move to
 	 */
 	public void move(String square);
+	
+	/**
+	 * Returns the player that owns this piece as an int
+	 * 0 - White, 1 - Black. 
+	 * @return the player that owns this piece
+	 */
+	public int getPlayer();
 }

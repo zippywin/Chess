@@ -57,6 +57,20 @@ public class Main {
     	
     	System.out.println("--Testing the creation of a chessboard--");
     	board.printBoard();
+    	assert(board.getSquare("A5").getFile()=='A');
+    	assert(board.getSquare("c6").getFile()=='C');
+    	assert(board.getSquare("E2").getRank()==2);
+    	assert(board.getSquare("A1").getRank()==1);
+    	assert(board.getPiece("A1")!= null);
+    	assert(board.getPiece("A1") instanceof Rook);
+    	assert(board.getPiece("E1") instanceof Queen);
+    	assert(board.getPiece("C2") instanceof Pawn);
+    	assert(board.getPiece("A8") instanceof Rook);
+    	
+    	board.makeMove("D2", "D4");
+    	System.out.println("  Moving a pawn from D2 to D4");
+    	assert(board.getPiece("D2") == null);
+    	assert(board.getPiece("D4") instanceof Pawn);
     	
     	System.out.println("Passed!");
     	
