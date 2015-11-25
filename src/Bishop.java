@@ -6,10 +6,12 @@
 public class Bishop implements Piece {
     private String location;
     private Chessboard chessboard;
+    private int colour;
 
-    public Bishop (Chessboard chessboard, String location) {
+    public Bishop (Chessboard chessboard, String location, int colour) {
         this.location = location;
         this.chessboard = chessboard;
+        this.colour = colour;
     }
 
     @Override

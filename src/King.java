@@ -11,10 +11,12 @@
 public class King implements Piece {
     private String location;
     private Chessboard chessboard;
+    private int colour;
 
-    public King(Chessboard chessboard, String location) {
+    public King(Chessboard chessboard, String location, int colour) {
         this.location = location;
         this.chessboard = chessboard;
+        this.colour = colour;
     }
 
     @Override

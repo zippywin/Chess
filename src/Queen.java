@@ -6,10 +6,12 @@
 public class Queen implements Piece {
     private String location;
     private Chessboard chessboard;
+    private int colour;
 
-    public Queen(Chessboard chessboard, String location) {
+    public Queen(Chessboard chessboard, String location, int colour) {
         this.location = location;
         this.chessboard = chessboard;
+        this.colour = colour;
     }
 
     @Override

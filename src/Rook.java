@@ -7,10 +7,12 @@
 public class Rook implements Piece {
     private String location;
     private Chessboard chessboard;
+    private int colour;
 
-    public Rook (Chessboard chessboard, String location) {
+    public Rook (Chessboard chessboard, String location, int colour) {
         this.location = location;
         this.chessboard = chessboard;
+        this.colour = colour;
     }
 
     @Override

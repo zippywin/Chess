@@ -11,10 +11,12 @@
 public class Pawn implements Piece{
     private String location;
     private Chessboard chessboard;
+    private int colour;
 
-    public Pawn (Chessboard chessboard, String location) {
+    public Pawn (Chessboard chessboard, String location, int colour) {
         this.location = location;
         this.chessboard = chessboard;
+        this.colour = colour;
     }
 
     @Override
