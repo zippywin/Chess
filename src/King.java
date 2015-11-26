@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Zippy on 24/11/2015.
  * - The King is a special piece in chess. It has the following special properties:
@@ -9,29 +12,70 @@
  * it is checkmate and the game ends.
  */
 public class King implements Piece {
-    private String location;
+    private char file;
+    private int rank;
     private Chessboard chessboard;
     private int colour;
 
-    public King(Chessboard chessboard, String location, int colour) {
-        this.location = location;
+    public King(Chessboard chessboard, char file, int rank, int colour) {
+        this.file = file;
+        this.rank = rank;
         this.chessboard = chessboard;
         this.colour = colour;
     }
 
     @Override
     public String getLocation() {
-        return location;
+        return "" + file + rank;
     }
 
     @Override
-    public boolean isValidMove(String sq) {
-        return true;
+    public boolean isValidMove(char file, int rank) {
+        /*
+        Rough steps to check for valid move:
+        Check if square is out of bounds
+        Check if square's destination is already occupied by another piece of the same colour
+        Check if square is within Piece's movement range
+        Check for obstructions on the way to destination
+        KING Exceptions:
+        Check if the move will put it in check
+        Check castle requirements
+         */
+
+        Piece destinationSquare = chessboard.getPiece(""+file+rank);
+        List<Square> listOfSquares = new ArrayList<Square>();
+        listOfSquares.add(new Square(this.file--, this.rank--));
+        listOfSquares.add(new Square(this.file--, this.rank));
+        listOfSquares.add(new Square(this.file--, this.rank++));
+        listOfSquares.add(new Square(this.file, this.rank--));
+        listOfSquares.add(new Square(this.file, this.rank));
+        listOfSquares.add(new Square(this.file, this.rank++));
+        listOfSquares.add(new Square(this.file++, this.rank--));
+        listOfSquares.add(new Square(this.file++, this.rank));
+        listOfSquares.add(new Square(this.file++, this.rank++));
+
+        if (file > 'H' || file < 'A' || rank > 8 || rank < 1) {
+            return false;
+
+        } else if (destinationSquare != null && destinationSquare.getPlayer() == colour ) {
+            return false;
+
+        } else if (!listOfSquares.contains(new Square(file, rank))) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 	@Override
-	public void move(String square) {
+	public void move(char file, int rank) {
 		// TODO Auto-generated method stub
-		
+            this.file = file;
+            this.rank = rank;
 	}
+
+    @Override
+    public int getPlayer() {
+        return colour;
+    }
 }

@@ -14,17 +14,20 @@ public interface Piece {
 	
 	/**
 	 * Returns true if the piece can move to the given square
-	 * @param square the square to move to
+	 * @param file the 'file' coordinate
+     * @param rank the 'rank' coordinate
 	 * @return true if moving to the square is valid 
 	 */
-	public boolean isValidMove(String square);
+	public boolean isValidMove(char file, int rank);
 	
 	/**
 	 * Moves the piece to the provided square
 	 * Assuming that it is a valid move
-	 * @param square the square to move to
+     * Specifically, updates the Piece's location field
+	 * @param file the 'file' coordinate from A-H
+     * @param rank the 'rank' coordinate from 1-8
 	 */
-	public void move(String square);
+	public void move(char file, int rank);
 	
 	/**
 	 * Returns the player that owns this piece as an int
