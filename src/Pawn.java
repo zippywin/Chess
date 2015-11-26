@@ -25,13 +25,19 @@ public class Pawn implements Piece{
     }
 
     @Override
-    public boolean isValidMove(String sq) {
+    public boolean isValidMove(char file, int rank) {
         return true;
     }
 
 	@Override
-	public void move(String square) {
+	public void move(char file, int rank) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getPlayer() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

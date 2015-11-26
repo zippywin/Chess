@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * An interface for pieces
  * @author Chris

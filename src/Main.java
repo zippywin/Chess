@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * The main class which handles the i/o 
  * @author Chris
@@ -8,11 +11,51 @@ public class Main {
     public static void main(String[] args) {
     	unitTests();
     	Game g = new Game();
+    	Scanner sc = new Scanner(System.in);
     	while (g.gameIsOver()==false) {
-    		//output chessboard to terminal
-    		//get user input;
+    		g.printGame();
+    		queryInput(g,sc);
     	}
     }
+    
+    /**
+	 * Queries the active player for their move
+	 * @param sc A scanner from which input is accepted.
+	 */
+	public static void queryInput(Game g, Scanner sc) {
+		String colour;
+		if (g.getActivePlayer() == Game.WHITE) {
+			colour = "White";
+		} else {
+			colour = "Black";
+		}
+		boolean moveMade = false;
+		while (moveMade == false) {
+			System.out.print(colour+" Player. Choose a piece to move:");
+			String src = sc.nextLine();
+			List<String> validMoves = g.getValidMoves(src);
+			if (validMoves != null) {
+			    System.out.println("Valid Moves:" + validMoves);
+			    boolean validInput = false;
+		    	while (validInput == false) {
+		    		System.out.print("Choose a square to move to (q to back): ");
+				    String dest = sc.nextLine();
+				    if (dest.equals("q")) {
+				    	validInput = true; //Exits inner loop and asks for another piece
+				    } else if (validMoves.contains(dest)) {
+				    	g.makeMove(src, dest);
+				    	validInput = true;
+				    	moveMade = true;
+				    } else {
+				    	System.out.println("Error, invalid move");
+				    }
+			    }
+		    } else {
+				System.out.println("No piece found.");
+				//Asks again
+			}
+		}
+	}
     
     public static void unitTests() {
     	Chessboard board = new Chessboard();
@@ -40,9 +83,17 @@ public class Main {
     	assert(sq.getPiece()==null);
     	System.out.println("  square:"+sq);
     	
-    	System.out.println("  Moving a knight from somewhere else onto it");
+    	System.out.println("  Threatening the square with a knight");
     	Knight knight = new Knight(board,"B3", Game.BLACK);
-    	knight.move("A1"); //Not tested
+    	sq.threaten(knight);
+    	assert(sq.isThreatenedBy(Game.BLACK));
+    	assert(!sq.isThreatenedBy(Game.WHITE));
+    	sq.removeThreat(knight);
+    	assert(!sq.isThreatenedBy(Game.BLACK));
+    	assert(!sq.isThreatenedBy(Game.WHITE));
+    	
+    	System.out.println("  Moving the knight onto it.");
+    	knight.move('A',1); //Not tested
     	sq.placePiece(knight);
     	System.out.println("  square:"+sq);
     	assert(sq.hasPiece()==true);
@@ -71,6 +122,8 @@ public class Main {
     	System.out.println("  Moving a pawn from D2 to D4");
     	assert(board.getPiece("D2") == null);
     	assert(board.getPiece("D4") instanceof Pawn);
+    	
+    	board.printBoard();
     	
     	System.out.println("Passed!");
     	

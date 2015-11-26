@@ -78,4 +78,5 @@ public class King implements Piece {
     public int getPlayer() {
         return colour;
     }
+
 }

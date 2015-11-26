@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * A class to represent a single square on a chessboard
@@ -6,9 +9,10 @@
  */
 public class Square {
 	
-	public Piece piece;
-	public char file;
-	public int rank;
+	private Piece piece;
+	private char file;
+	private int rank;
+	private List<Piece> potentialMovers;
 	
 	/**
 	 * Creates a square at the chosen location
@@ -18,6 +22,7 @@ public class Square {
 	public Square(char file, int rank) {
 		this.file=file;
 		this.rank=rank;
+		potentialMovers = new LinkedList<Piece>();
 	}
 	
 	/**
@@ -33,9 +38,12 @@ public class Square {
 	
 	/**
 	 * Removes the piece on this square
+	 * @return the piece being removed
 	 */
-	public void removePiece() {
+	public Piece removePiece() {
+		Piece p = this.piece;
 		this.piece = null;
+		return p;
 	}
 	
 	/**
@@ -102,5 +110,55 @@ public class Square {
 	 */
 	public int getRank() {
 		return rank;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Square) {
+			Square other = (Square)obj;
+			if (this.file==other.file && this.rank==other.rank) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return file+23*rank;
+	}
+	
+	/**
+	 * Tells this square that it is currently being threatened by a piece
+	 * Or, in other words, that a piece might potentially move onto this square
+	 * @param p the threatening piece
+	 */
+	public void threaten(Piece p) {
+		potentialMovers.add(p);
+	}
+	
+	/**
+	 * Removes piece p as a potential unit that could've moved onto this square
+	 * @param p the piece to be removed
+	 */
+	public void removeThreat(Piece p) {
+		potentialMovers.remove(p);
+	}
+	
+	/**
+	 * Returns true if this square is being threatened by one or more pieces
+	 * controlled by the specified player.
+	 * @param player the specified player
+	 * @return true if this square is being threatened by one or more pieces
+	 */
+	public boolean isThreatenedBy(int player) {
+		if (!potentialMovers.isEmpty()) {
+			for (Piece p: potentialMovers) {
+				if (p.getPlayer()==player) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

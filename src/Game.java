@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  * A class responsible for handling user actions 
  * and keeping track of player/game information
@@ -9,7 +13,17 @@ public class Game {
 	private Chessboard board;
 	private int turn;
 	private int activePlayer;
+	private Scanner sc;
+	private boolean gameOver;
+	
+	/**
+	 *  The integer representing white player
+	 */
 	public static int WHITE = 0;
+	
+	/**
+	 * The integer representing black player
+	 */
 	public static int BLACK = 1;
 	
 	/**
@@ -19,6 +33,8 @@ public class Game {
 		board = new Chessboard();
 		turn = 0;
 		activePlayer = Game.WHITE;
+		sc = new Scanner(System.in);
+		gameOver = false;
 	}
 	
 	/**
@@ -44,11 +60,7 @@ public class Game {
 	 */
 	public void makeMove(String square1, String square2) {
 		board.makeMove(square1, square2);
-		if (activePlayer == Game.WHITE) {
-			activePlayer = Game.BLACK;
-		} else {
-			activePlayer = Game.WHITE;
-		}
+		nextTurn();
 	}
 	
 	/**
@@ -56,7 +68,7 @@ public class Game {
 	 * @return true if the game is over
 	 */
 	public boolean gameIsOver() {
-		return true;
+		return gameOver;
 	}
 	
 	/**
@@ -65,4 +77,32 @@ public class Game {
 	public void printGame() {
 		board.printBoard();
 	}
+	
+	/**
+	 *  Advances the game to the next turn
+	 */
+	public void nextTurn() {
+		turn++;
+		if (activePlayer==Game.BLACK) {
+			activePlayer = Game.WHITE;
+		} else {
+			activePlayer = Game.BLACK;
+		}
+	}
+
+	/**
+	 * Given the location of a piece, returns a list of locations the player may move to
+	 * @param loc the location of a selected piece
+	 * @return a list of valid moves. (Null if a piece wasn't found, or if the input is invalid)
+	 */
+	public List<String> getValidMoves(String loc) {
+		Piece p = board.getPiece(loc);
+		LinkedList<String> validMoves = null;
+		if (p != null) {
+			validMoves = new LinkedList<String>();
+			validMoves.add("D4");
+		}
+		return validMoves;
+	}
+	
 }
