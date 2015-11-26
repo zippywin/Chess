@@ -34,9 +34,11 @@ public class Main {
 			System.out.print(colour+" Player. Choose a piece to move:");
 			String src = sc.nextLine();
 			List<String> validMoves = g.getValidMoves(src);
+			//If validMoves is null, then no piece was found, or the input was invalid
 			if (validMoves != null) {
 			    System.out.println("Valid Moves:" + validMoves);
 			    boolean validInput = false;
+			    //Loop until user inputs a valid input
 		    	while (validInput == false) {
 		    		System.out.print("Choose a square to move to (q to back): ");
 				    String dest = sc.nextLine();

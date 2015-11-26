@@ -111,7 +111,9 @@ public class Chessboard {
 	 */
 	public void makeMove(String square1, String square2) {
 		Piece p = getSquare(square1).removePiece();
+		//Code to update the squares the piece used to threaten
 		getSquare(square2).placePiece(p);
+		//Code to update the squares the piece is now threatening.
 	}
 
 	/**
