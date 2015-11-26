@@ -31,7 +31,7 @@ public class Main {
 		}
 		boolean moveMade = false;
 		while (moveMade == false) {
-			System.out.print(colour+" Player. Choose a piece to move:");
+			System.out.print(colour+" Player. Choose a piece to move: ");
 			String src = sc.nextLine();
 			List<String> validMoves = g.getValidMoves(src);
 			//If validMoves is null, then no piece was found, or the input was invalid
