@@ -99,8 +99,7 @@ public class Game {
 		Piece p = board.getPiece(loc);
 		LinkedList<String> validMoves = null;
 		if (p != null) {
-			validMoves = new LinkedList<String>();
-			validMoves.add("D4");
+			
 		}
 		return validMoves;
 	}

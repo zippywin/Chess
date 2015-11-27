@@ -14,11 +14,21 @@ import java.util.List;
 public class King implements Piece {
     private char file;
     private int rank;
+    private int x;
+    private int y;
     private Chessboard chessboard;
     private int colour;
 
-    public King(Chessboard chessboard, char file, int rank, int colour) {
-        this.file = file;
+    /**
+     * Creates a king at the specified 0-indexed x-y coordinates,
+     * @param chessboard the board the piece belongs to
+     * @param x the x coordinate of the piece
+     * @param y the y coordinate of the piece
+     * @param colour the colour of the player that owns this piece
+     */
+    public King(Chessboard chessboard, int x, int y, int colour) {
+        this.x = x;
+        this.y = y;
         this.rank = rank;
         this.chessboard = chessboard;
         this.colour = colour;
@@ -79,4 +89,13 @@ public class King implements Piece {
         return colour;
     }
 
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
 }

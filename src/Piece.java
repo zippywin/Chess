@@ -37,4 +37,16 @@ public interface Piece {
 	 * @return the player that owns this piece
 	 */
 	public int getPlayer();
+	
+	/**
+	 * Returns the x coordinate of this piece.
+	 * @return the x coordinate of this piece/
+	 */
+	public int getX();
+	
+	/**
+	 * Returns the y coordinate of this piece
+	 * @return the y coordinate of this piece
+	 */
+	public int getY();
 }

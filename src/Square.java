@@ -10,6 +10,8 @@ import java.util.List;
 public class Square {
 	
 	private Piece piece;
+	private int x;
+	private int y;
 	private char file;
 	private int rank;
 	private List<Piece> potentialMovers;
@@ -19,9 +21,20 @@ public class Square {
 	 * @param file the letter representing the column of the square
 	 * @param rank the number representing the row of the square
 	 */
+	public Square(int x, int y) {
+		this.x=x;
+		this.y=y;
+		this.file = 'A';
+		this.file += x;
+		this.rank = y+1;
+		potentialMovers = new LinkedList<Piece>();
+	}
+	
 	public Square(char file, int rank) {
-		this.file=file;
-		this.rank=rank;
+		this.file = file;
+		this.rank = rank;
+		this.x = file - 'A';
+		this.y = rank - 1;
 		potentialMovers = new LinkedList<Piece>();
 	}
 	
@@ -93,7 +106,7 @@ public class Square {
 	 * @return the square's location on the chessboard
 	 */
 	public String getLoc() {
-		return ""+file+rank;
+		return ""+getFile()+getRank();
 	}
 	
 	/**
@@ -110,6 +123,22 @@ public class Square {
 	 */
 	public int getRank() {
 		return rank;
+	}
+	
+	/**
+	 * Returns the x coordinates of this square
+	 * @return the x coordinates of this square
+	 */
+	public int getX() {
+		return x;
+	}
+	
+	/**
+	 * Returns the y coordinates of this square
+	 * @return the y coordinates of this square
+	 */
+	public int getY() {
+		return y;
 	}
 	
 	@Override

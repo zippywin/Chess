@@ -68,9 +68,20 @@ public class Main {
     	Square sq = new Square('A',1);
     	assert(sq.getFile()=='A');
     	assert(sq.getRank()==1);
+    	assert(sq.getX()==0);
+    	assert(sq.getY()==0);
     	assert(sq.hasPiece()==false);
     	assert(sq.getLoc().equals("A1"));
     	System.out.println("  square:"+sq);
+    	
+    	Square sq2 = new Square(3,3);
+    	assert(sq2.getX()==3);
+    	assert(sq2.getY()==3);
+    	assert(sq2.getFile()=='D');
+    	assert(sq2.getRank()==4);
+    	assert(sq2.hasPiece()==false);
+    	assert(sq2.isThreatenedBy(Game.WHITE)==false);
+    	assert(sq2.isThreatenedBy(Game.BLACK)==false);
     	
     	Pawn pawn = new Pawn(board, "A1", Game.WHITE);
     	System.out.println("  Moving a pawn onto it");
