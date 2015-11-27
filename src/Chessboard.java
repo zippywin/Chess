@@ -33,6 +33,11 @@ public class Chessboard {
 	 */
 	public Chessboard() {
 		board = new Square[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				board[i][j] = new Square(i,j);
+			}
+		}
 		whitePieces = new LinkedList<Piece>();
 		blackPieces = new LinkedList<Piece>();
 	}
@@ -41,41 +46,33 @@ public class Chessboard {
 	 * Initializes the chessboard to the starting state of a game.
 	 */
 	public void init() {
-		//Creating squares
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				board[i][j] = new Square(i,j);
-			}
-		}
 		//Placing pawns
 		for (int i = 0; i < 8; i++) {
-			char rank = 'A';
-			rank += i;
-			String loc = rank+"2";
-			board[i][1].placePiece(new Pawn(this,loc,Game.WHITE));
-			loc = rank+"7";
-			board[i][6].placePiece(new Pawn(this,loc,Game.BLACK));
+			place(new Pawn(this,i,1,Game.WHITE),i,1);
+			place(new Pawn(this,i,6,Game.BLACK),i,6);
 		}
 		//Initing the back row
-		board[0][0].placePiece(new Rook(this,"A1",Game.WHITE));
-		board[1][0].placePiece(new Knight(this,"B1",Game.WHITE));
-		board[2][0].placePiece(new Bishop(this,"C1",Game.WHITE));
 		whiteKing = new King(this,3,0,Game.WHITE);
-		board[3][0].placePiece(whiteKing);
-		board[4][0].placePiece(new Queen(this,"E1",Game.WHITE));
-		board[5][0].placePiece(new Bishop(this,"F1",Game.WHITE));
-		board[6][0].placePiece(new Knight(this,"G1",Game.WHITE));
-		board[7][0].placePiece(new Rook(this,"H1",Game.WHITE));
-		//Initing the front row
-		board[0][7].placePiece(new Rook(this,"A8",Game.BLACK));
-		board[1][7].placePiece(new Knight(this,"B8",Game.BLACK));
-		board[2][7].placePiece(new Bishop(this,"C8",Game.BLACK));
 		blackKing = new King(this,3,7,Game.BLACK);
-		board[3][7].placePiece(blackKing);
-		board[4][7].placePiece(new Queen(this,"E8",Game.BLACK));
-		board[5][7].placePiece(new Bishop(this,"F8",Game.BLACK));
-		board[6][7].placePiece(new Knight(this,"G8",Game.BLACK));
-		board[7][7].placePiece(new Rook(this,"H8",Game.BLACK));
+		
+		place(new Rook(this,"A1",Game.WHITE),0,0);
+		place(new Knight(this,"B1",Game.WHITE),1,0);
+		place(new Bishop(this,"C1",Game.WHITE),2,0);
+		place(whiteKing,3,0);
+		place(new Queen(this,"E1",Game.WHITE),4,0);
+		place(new Bishop(this,"F1",Game.WHITE),5,0);
+		place(new Knight(this,"G1",Game.WHITE),6,0);
+		place(new Rook(this,"H1",Game.WHITE),7,0);
+		
+		//Initing the front row
+		place(new Rook(this,"A8",Game.BLACK),0,7);
+		place(new Knight(this,"B8",Game.BLACK),1,7);
+		place(new Bishop(this,"C8",Game.BLACK),2,7);
+		place(blackKing,3,7);
+		place(new Queen(this,"E8",Game.BLACK),4,7);
+		place(new Bishop(this,"F8",Game.BLACK),5,7);
+		place(new Knight(this,"G8",Game.BLACK),6,7);
+		place(new Rook(this,"H8",Game.BLACK),7,7);
 	}
 	
 	/**
@@ -91,7 +88,22 @@ public class Chessboard {
 		}
 		return p;
 	}
-
+	
+	/**
+	 * Places a piece on the board
+	 * @param p the piece to be placed
+	 * @param x the x coordinate of the square to place
+	 * @param y the y coordinate of the square to place
+	 */
+	public void place(Piece p, int x, int y) {
+		board[x][y].placePiece(p);
+		if (p.getPlayer()==Game.WHITE) {
+			whitePieces.add(p);
+		} else {
+			blackPieces.add(p);
+		}
+	}
+	
 	/**
 	 * Given a location of a square in chess notation,
 	 * returns the square object corresponding to it.
@@ -175,9 +187,60 @@ public class Chessboard {
 		boolean threatened = false;
 		Square sq = getSquare(x,y);
 		if (sq != null) {
-			if ()
+			for (Piece p : getPiecesOwnedBy(player)) {
+				if (p.isValidMove(x, y));
+			}
 		}
 		return threatened;
+	}
+	
+	public List<Square> getEmptySquares(int x, int y, int direction) {
+		List<Square> emptySquares = new LinkedList<Square>();
+		boolean pieceFound = false;
+		while (!pieceFound && 0 < y && y < 7 && 0 < x && x < 7) {
+			if (direction == NORTH) {
+				y++;
+			} else if (direction == NORTHEAST) {
+				y++;
+				x++;
+			} else if (direction == EAST) {
+				x++;
+			} else if (direction == SOUTHEAST) {
+				x++;
+				y--;
+			} else if (direction == SOUTH) {
+				y--;
+			} else if (direction == SOUTHWEST) {
+				y--;
+				x--;
+			} else if (direction == WEST) {
+				x--;
+			} else if (direction == NORTHWEST) {
+				y++;
+				x--;
+			}
+			Square sq = getSquare(x,y);
+			if (sq.hasPiece()) {
+				emptySquares.add(sq);
+			} else {
+				pieceFound = true;
+			}
+		}
+		return emptySquares;
+	}
+	
+	/**
+	 * Returns a list of pieces owned by the specified player
+	 * currently on the board.
+	 * @param player the specified player
+	 * @return a list of pieces owned by the specified player.
+	 */
+	public List<Piece> getPiecesOwnedBy(int player) {
+		if (player == Game.WHITE) {
+			return whitePieces;
+		} else {
+			return blackPieces;
+		}
 	}
 	
 	/**

@@ -61,6 +61,7 @@ public class Main {
     
     public static void unitTests() {
     	Chessboard board = new Chessboard();
+    	board.init();
     	
     	System.out.println("--Testing squares--");
     	
@@ -83,7 +84,7 @@ public class Main {
     	assert(sq2.isThreatenedBy(Game.WHITE)==false);
     	assert(sq2.isThreatenedBy(Game.BLACK)==false);
     	
-    	Pawn pawn = new Pawn(board, "A1", Game.WHITE);
+    	Pawn pawn = new Pawn(board, 0,0, Game.WHITE);
     	System.out.println("  Moving a pawn onto it");
     	sq.placePiece(pawn);
     	System.out.println("  square:"+sq);

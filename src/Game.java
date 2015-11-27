@@ -15,6 +15,7 @@ public class Game {
 	private int activePlayer;
 	private Scanner sc;
 	private boolean gameOver;
+	private int winner;
 	
 	/**
 	 *  The integer representing white player
@@ -26,13 +27,17 @@ public class Game {
 	 */
 	public static int BLACK = 1;
 	
+	public static int NOONE = -1;
+	
 	/**
 	 * Creates a new game
 	 */
 	public Game() {
 		board = new Chessboard();
+		board.init();
 		turn = 0;
-		activePlayer = Game.WHITE;
+		activePlayer = WHITE;
+		winner = NOONE;
 		sc = new Scanner(System.in);
 		gameOver = false;
 	}
@@ -97,11 +102,18 @@ public class Game {
 	 */
 	public List<String> getValidMoves(String loc) {
 		Piece p = board.getPiece(loc);
-		LinkedList<String> validMoves = null;
+		List<String> moves = null;
 		if (p != null) {
-			
+			moves = p.getValidMoves();
 		}
-		return validMoves;
+		return moves;
 	}
 	
+	/**
+	 * Returns the winner of the game, if the game is finished
+	 * @return the winner of the game, if the game is finished
+	 */
+	public int getWinner() {
+		return winner;
+	}
 }

@@ -20,18 +20,30 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isValidMove(char file, int rank) {
+    public boolean isValidMove(int x, int y) {
         return true;
     }
 
 	@Override
-	public void move(char file, int rank) {
+	public void move(int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public int getPlayer() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getY() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

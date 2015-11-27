@@ -29,7 +29,9 @@ public class King implements Piece {
     public King(Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
         this.y = y;
-        this.rank = rank;
+        this.file = 'A';
+        file += x-1;
+        this.rank = y+1;
         this.chessboard = chessboard;
         this.colour = colour;
     }
@@ -40,7 +42,7 @@ public class King implements Piece {
     }
 
     @Override
-    public boolean isValidMove(char file, int rank) {
+    public boolean isValidMove(int x, int y) {
         /*
         Rough steps to check for valid move:
         Check if square is out of bounds
@@ -52,6 +54,7 @@ public class King implements Piece {
         Check castle requirements
          */
 
+    	//TODO I changed the file and rank to x and y so you probably need to recalibrate this. 
         Piece destinationSquare = chessboard.getPiece(""+file+rank);
         List<Square> listOfSquares = new ArrayList<Square>();
         listOfSquares.add(new Square(this.file--, this.rank--));
@@ -78,10 +81,10 @@ public class King implements Piece {
     }
 
 	@Override
-	public void move(char file, int rank) {
+	public void move(int x, int y) {
 		// TODO Auto-generated method stub
-            this.file = file;
-            this.rank = rank;
+            this.x = x;
+            this.y = y;
 	}
 
     @Override

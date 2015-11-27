@@ -20,7 +20,9 @@ public interface Piece {
      * @param rank the 'rank' coordinate
 	 * @return true if moving to the square is valid 
 	 */
-	public boolean isValidMove(char file, int rank);
+	public boolean isValidMove(int x, int y);
+	
+	public List<String> getValidMoves();
 	
 	/**
 	 * Moves the piece to the provided square
@@ -29,7 +31,7 @@ public interface Piece {
 	 * @param file the 'file' coordinate from A-H
      * @param rank the 'rank' coordinate from 1-8
 	 */
-	public void move(char file, int rank);
+	public void move(int x, int y);
 	
 	/**
 	 * Returns the player that owns this piece as an int

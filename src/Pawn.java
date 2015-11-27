@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by Zippy on 25/11/2015.
  * The Pawn is a minor but essential piece in Chess. It is also one of the most complicated pieces.
@@ -12,32 +15,67 @@ public class Pawn implements Piece{
     private String location;
     private Chessboard chessboard;
     private int colour;
-
-    public Pawn (Chessboard chessboard, String location, int colour) {
-        this.location = location;
+    private boolean hasMoved;
+    private int x;
+    private int y;
+    
+    public Pawn (Chessboard chessboard, int x, int y, int colour) {
+        this.x = x;
+        this.y = y;
         this.chessboard = chessboard;
         this.colour = colour;
+        
     }
-
+    
     @Override
     public String getLocation() {
-        return location;
+        char file = 'A';
+        file += x - 1;
+        int rank = y+1;
+    	return ""+file+rank;
     }
-
+    
     @Override
-    public boolean isValidMove(char file, int rank) {
+    public boolean isValidMove(int x, int y) {
         return true;
     }
 
 	@Override
-	public void move(char file, int rank) {
-		// TODO Auto-generated method stub
-		
+	public void move(int x, int y) {
+		this.x = x;
+		this.y = y;
+		hasMoved = true;
 	}
 
 	@Override
 	public int getPlayer() {
-		// TODO Auto-generated method stub
-		return 0;
+		return colour;
+	}
+
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+
+	@Override
+	public List<String> getValidMoves() {
+		List<String> validMoves = new LinkedList<String>();
+		if (colour == Game.WHITE) {
+			validMoves.add(chessboard.getSquare(x,y+1).getLoc());
+			if (!hasMoved) {
+				validMoves.add(chessboard.getSquare(x,y+2).getLoc());
+			}
+		} else {
+			validMoves.add(chessboard.getSquare(x,y-1).getLoc());
+			if (!hasMoved) {
+				validMoves.add(chessboard.getSquare(x,y-2).getLoc());
+			}
+		}
+		return validMoves;
 	}
 }
