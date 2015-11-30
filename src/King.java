@@ -86,8 +86,6 @@ public class King implements Piece {
             if (x + i >= 0 && x + i < 8) {
                 for (int j = -1; j < 2; j++) {
                     if (y + j >= 0 && y + j < 8) {
-                        System.out.println("x = " + (x + i));
-                        System.out.println("y = " + (y + j));
                         adjacentSquares.add(chessboard.getSquare(x + i, y + j));
                     }
                 }
