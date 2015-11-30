@@ -18,6 +18,7 @@ public class King implements Piece {
     private int y;
     private Chessboard chessboard;
     private int colour;
+    private boolean hasMoved;
 
     private List<Square> movementRange = new ArrayList<Square>(); //Stores basic logic of movement
 
@@ -36,6 +37,7 @@ public class King implements Piece {
         this.rank = y+1;
         this.chessboard = chessboard;
         this.colour = colour;
+        hasMoved = false;
 
         //createMovementRange();
     }
@@ -91,6 +93,8 @@ public class King implements Piece {
                 }
             }
         }
+        //TODO: add castling logic here.
+
         /*
         adjacentSquares.add(chessboard.getSquare(x-1,y-1));
         adjacentSquares.add(chessboard.getSquare(x-1,y));
@@ -133,4 +137,5 @@ public class King implements Piece {
 	public int getY() {
 		return y;
 	}
+
 }
