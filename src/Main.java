@@ -33,11 +33,14 @@ public class Main {
 		while (moveMade == false) {
 			System.out.print(colour+" Player. Choose a piece to move: ");
 			String src = sc.nextLine();
-			List<String> validMoves = g.getValidMoves(src);
-			//If validMoves is null, then no piece was found, or the input was invalid
-			if (validMoves == null) {
+			Piece p = g.getPiece(src);
+			if (p == null) {
 				System.out.println("No piece found.");
+			} else if (p.getPlayer() != g.getActivePlayer()){
+				System.out.println("That piece is not yours.");
 			} else {
+				List<String> validMoves = g.getValidMoves(p);
+				//If validMoves is null, then no piece was found, or the input was invalid
 				if (validMoves.size() == 0) {
 					System.out.println("That piece has no valid moves. Choose another.");
 				} else {	
@@ -57,8 +60,8 @@ public class Main {
 					    } else {
 					    	System.out.println("Error, invalid move");
 					    }
-				    }
-				}				
+				    }			
+				}
 			}
 		}
 	}
@@ -136,7 +139,7 @@ public class Main {
     	assert(board.getPiece("C2") instanceof Pawn);
     	assert(board.getPiece("A8") instanceof Rook);
     	
-    	board.makeMove("D2", "D4");
+    	g.makeMove("D2", "D4");
     	System.out.println("  Moving a pawn from D2 to D4");
     	assert(board.getPiece("D2") == null);
     	assert(board.getPiece(3,2) == null);
@@ -163,7 +166,7 @@ public class Main {
     	assert(squares.contains(board.getSquare(3,2)));
     	assert(squares.contains(board.getSquare(3,3)));
     	
-    	System.out.println("  passed!");
+    	System.out.println("Passed!");
     	
     	System.out.println("Testing validMoves");
     	Piece p = board.getSquare(3,0).getPiece();

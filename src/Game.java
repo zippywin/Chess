@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public class Game {
 	private int winner;
 	private King whiteKing;
 	private King blackKing;
+	private List<Piece> takenWhitePieces;
+	private List<Piece> takenBlackPieces;
 	
 	/**
 	 *  The integer representing white player
@@ -38,6 +41,8 @@ public class Game {
 		activePlayer = WHITE;
 		winner = NOONE;
 		gameOver = false;
+		takenWhitePieces = new LinkedList<Piece>();
+		takenBlackPieces = new LinkedList<Piece>();
 	}
 	
 	/**
@@ -90,14 +95,32 @@ public class Game {
 	}
 	
 	/**
-	 * Given two squares, moves a piece from square1 to square 2
+	 * Given two squares, moves a piece from square1 to square 2.
+	 * Then works out the consequences of moving this piece. (Such as pawn promotion.)
 	 * Then advances the game to the next turn. 
 	 * @param square1 the square containing the piece to be moved
 	 * @param square2 the destination square
 	 */
 	public void makeMove(String square1, String square2) {
-		board.makeMove(square1, square2);
+		Square src = board.getSquare(square1);
+		Square dest = board.getSquare(square2);
+		Piece p = src.removePiece();
+		p.move(dest.getX(), dest.getY());
+		if (dest.hasPiece()) {
+			//Removes the piece from dest, and marks it as taken
+			takePiece(dest);
+		}
+		dest.placePiece(p);
 		nextTurn();
+	}
+	
+	public void takePiece(Square sq) {
+		int player = sq.getPiece().getPlayer();
+		if (player == WHITE) {
+			takenWhitePieces.add(sq.removePiece());
+		} else {
+			takenBlackPieces.add(sq.removePiece());
+		}
 	}
 	
 	/**
@@ -132,11 +155,15 @@ public class Game {
 	 * @param loc the location of a selected piece
 	 * @return a list of valid moves. (Null if a piece wasn't found, or if the input is invalid)
 	 */
-	public List<String> getValidMoves(String loc) {
-		Piece p = board.getPiece(loc);
+	public List<String> getValidMoves(Piece p) {
 		List<String> moves = null;
 		if (p != null) {
 			moves = p.getValidMoves();
+		}
+		for (String move : moves) {
+			if (willResultInCheck(p.getLocation(), move)) {
+				moves.remove(move);
+			}
 		}
 		return moves;
 	}
@@ -172,6 +199,11 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Returns the king piece for the specified player
+	 * @param player the owner of the requested king
+	 * @return the king piece for the specified player
+	 */
 	public King getKing(int player) {
 		if (player == WHITE) {
 			return whiteKing;
@@ -180,7 +212,32 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Returns the chessboard object this game is using
+	 * @return the chessboard object
+	 */
 	public Chessboard getBoard() {
 		return board;
+	}
+	
+	/**
+	 * Simulates the following move to check if this will land a player in check
+	 * @param square1 the square with the piece to move
+	 * @param square2 the square to simulate the move to 
+	 * @return true if moving here will result in a check
+	 */
+	public boolean willResultInCheck(String square1, String square2) {
+		Square src = board.getSquare(square1);
+		Square dest = board.getSquare(square2);
+		Piece p = src.removePiece();
+		dest.placePiece(p);
+		boolean check = isInCheck(p.getPlayer());
+		dest.removePiece();
+		src.placePiece(p);
+		return check;
+	}
+	
+	public Piece getPiece(String loc) {
+		return board.getPiece(loc);
 	}
 }

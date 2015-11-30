@@ -41,7 +41,7 @@ public class Square {
 	
 	/**
 	 * Places a chess piece on this square.
-	 * If there is already a piece on this square, nothing happens.
+	 * If there is already a piece on this square, the piece will be replaced
 	 * @param piece the piece to be placed
 	 */
 	public void placePiece(Piece piece) {

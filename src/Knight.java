@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,7 +35,24 @@ public class Knight implements Piece{
 
     @Override
     public List<String> getValidMoves() {
-        return null;
+    	List<String> validMoves = new LinkedList<String>();
+    	List<Square> possibleSquares = new LinkedList<Square>();
+    	
+    	possibleSquares.add(chessboard.getSquare(x+2,y+1));
+    	possibleSquares.add(chessboard.getSquare(x-2,y+1));
+    	possibleSquares.add(chessboard.getSquare(x-2,y-1));
+    	possibleSquares.add(chessboard.getSquare(x+2,y-1));
+    	possibleSquares.add(chessboard.getSquare(x+1,y+2));
+    	possibleSquares.add(chessboard.getSquare(x-1,y+2));
+    	possibleSquares.add(chessboard.getSquare(x-1,y-2));
+    	possibleSquares.add(chessboard.getSquare(x+1,y-2));
+    	
+    	for (Square sq : possibleSquares) {
+    		if (sq != null && (!sq.hasPiece() || sq.getPiece().getPlayer() != colour)) {
+    			validMoves.add(sq.getLoc());
+    		}
+    	}
+    	return validMoves;
     }
 
 	@Override

@@ -125,30 +125,6 @@ public class Chessboard {
 	}
 	
 	/**
-	 *  Given two squares, moves the piece in square 1 to square2
-	 *  Does not check validity. Will throw exceptions if bad things happen.
-	 * @param square1 the square containing the piece
-	 * @param square2 the square to move to
-	 */
-	public void makeMove(String square1, String square2) {
-		Square dest = getSquare(square2);
-		Piece p = getSquare(square1).removePiece();
-		p.move(dest.getX(), dest.getY());
-		dest.placePiece(p);
-	}
-	
-	/**
-	 * Given two squares, moves the piece in sq1 to sq2
-	 * @param sq1 The source square
-	 * @param sq2 the destination square
-	 */
-	public void makeMove(Square sq1, Square sq2) {
-		Piece p = sq1.removePiece();
-		p.move(sq2.getX(), sq2.getY());
-		sq2.placePiece(p);
-	}
-	
-	/**
 	 * Prints out the chessboard
 	 */
 	public void printBoard() {
@@ -206,6 +182,13 @@ public class Chessboard {
 		return listOfSquares;
 	}
 	
+	/**
+	 * Given a square and a direction, returns the square directly adjacent to it, 
+	 * in the given direction
+	 * @param sq the specified square
+	 * @param direction the direction to go in
+	 * @return the square next to it in the given direction. Null if it doesn't exist.
+	 */
 	public Square getNextSquare(Square sq, int direction) {
 		int x = sq.getX();
 		int y = sq.getY();
@@ -247,17 +230,5 @@ public class Chessboard {
 		}
 	}
 	
-	/**
-	 * Checks if the following move will result in a check for the moving player
-	 * @param x1 The x coordinate of the piece.
-	 * @param y1 the y coordinate of the piece.
-	 * @param x2 the x coordinate to move to.
-	 * @param y2 the y coordinate to move to.
-	 * @return
-	 */
-	public boolean willBeInCheck(int x1, int y1, int x2, int y2) {
-		return false;
-	}
-
 	
 }
