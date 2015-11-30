@@ -19,6 +19,8 @@ public class King implements Piece {
     private Chessboard chessboard;
     private int colour;
 
+    private List<Square> movementRange = new ArrayList<Square>(); //Stores basic logic of movement
+
     /**
      * Creates a king at the specified 0-indexed x-y coordinates,
      * @param chessboard the board the piece belongs to
@@ -34,6 +36,22 @@ public class King implements Piece {
         this.rank = y+1;
         this.chessboard = chessboard;
         this.colour = colour;
+
+        //createMovementRange();
+    }
+
+    /**
+     * Helper function - creates the piece's unobstructed list of movement ranges
+     */
+    private void createMovementRange() {
+        movementRange.add(new Square(this.file - 1, this.rank - 1));
+        movementRange.add(new Square(this.file - 1, this.rank));
+        movementRange.add(new Square(this.file - 1, this.rank + 1));
+        movementRange.add(new Square(this.file, this.rank - 1));
+        movementRange.add(new Square(this.file, this.rank + 1));
+        movementRange.add(new Square(this.file + 1, this.rank - 1));
+        movementRange.add(new Square(this.file + 1, this.rank));
+        movementRange.add(new Square(this.file + 1, this.rank + 1));
     }
 
     @Override
@@ -54,40 +72,38 @@ public class King implements Piece {
         Check castle requirements
          */
 
-    	//TODO I changed the file and rank to x and y so you probably need to recalibrate this. 
-        Piece destinationSquare = chessboard.getPiece(""+file+rank);
-        List<Square> listOfSquares = new ArrayList<Square>();
-        listOfSquares.add(new Square(this.file - 1, this.rank - 1));
-        listOfSquares.add(new Square(this.file - 1, this.rank));
-        listOfSquares.add(new Square(this.file - 1, this.rank + 1));
-        listOfSquares.add(new Square(this.file, this.rank - 1));
-        listOfSquares.add(new Square(this.file, this.rank));
-        listOfSquares.add(new Square(this.file, this.rank + 1));
-        listOfSquares.add(new Square(this.file + 1, this.rank - 1));
-        listOfSquares.add(new Square(this.file + 1, this.rank));
-        listOfSquares.add(new Square(this.file + 1, this.rank + 1));
-
-        if (file > 'H' || file < 'A' || rank > 8 || rank < 1) {
-            return false;
-
-        } else if (destinationSquare != null && destinationSquare.getPlayer() == colour ) {
-            return false;
-
-        } else if (!listOfSquares.contains(new Square(file, rank))) {
-            return false;
-        } else {
-            return true;
-        }
+        return true;
+    	//TODO I changed the file and rank to x and y so you probably need to recalibrate this.
     }
 
     @Override
     public List<String> getValidMoves() {
-        return new ArrayList<String>();
+        List<String> possibleMoves = new ArrayList<String>();
+
+        List<Square> adjacentSquares = new ArrayList<Square>();
+
+        adjacentSquares.add(chessboard.getSquare(x-1,y-1));
+        adjacentSquares.add(chessboard.getSquare(x-1,y));
+        adjacentSquares.add(chessboard.getSquare(x-1,y+1));
+        adjacentSquares.add(chessboard.getSquare(x,y-1));
+        adjacentSquares.add(chessboard.getSquare(x,y+1));
+        adjacentSquares.add(chessboard.getSquare(x+1,y-1));
+        adjacentSquares.add(chessboard.getSquare(x+1,y));
+        adjacentSquares.add(chessboard.getSquare(x+1,y+1));
+
+        for (Square square : adjacentSquares) {
+            if (!square.hasPiece()) {
+                possibleMoves.add(square.getLoc());
+            } else if (square.getPiece().getPlayer() != colour) {
+                possibleMoves.add(square.getLoc());
+            }
+        }
+
+        return possibleMoves;
     }
 
 	@Override
 	public void move(int x, int y) {
-		// TODO Auto-generated method stub
             this.x = x;
             this.y = y;
 	}

@@ -21,7 +21,12 @@ public interface Piece {
 	 * @return true if moving to the square is valid 
 	 */
 	public boolean isValidMove(int x, int y);
-	
+
+
+    /**
+     * Returns a list of all the valid squares a piece can move to.
+     * @return  list of squares a piece can move to
+     */
 	public List<String> getValidMoves();
 	
 	/**
