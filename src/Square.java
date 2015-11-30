@@ -15,6 +15,7 @@ public class Square {
 	private char file;
 	private int rank;
 	private List<Piece> potentialMovers;
+	private boolean enPassantAvailable;
 	
 	/**
 	 * Creates a square at the chosen location
@@ -189,5 +190,23 @@ public class Square {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Sets this square to enable/disable pawns to en passant onto this square
+	 * @param value the value to set the boolean to
+	 */
+	public void setEnPassantable(boolean value) {
+		enPassantAvailable = value;
+	}
+	
+	/**
+	 * Returns whether or not a pawn is able to en passant onto this square.
+	 * This method relies on Game telling it whenever a pawn bypasses this square
+	 * using its two-step move. 
+	 * @return whether or not a pawn is able to en passant onto this square.
+	 */
+	public boolean enPassantAvailable() {
+		return enPassantAvailable;
 	}
 }

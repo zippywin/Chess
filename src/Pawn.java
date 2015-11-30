@@ -71,10 +71,26 @@ public class Pawn implements Piece{
 			if (!hasMoved) {
 				validMoves.add(chessboard.getSquare(x,y+2).getLoc());
 			}
+			Square topLeft = chessboard.getSquare(x-1,y+1);
+			if (topLeft != null && topLeft.hasPiece()) {
+				validMoves.add(topLeft.getLoc());
+			} 
+			Square topRight = chessboard.getSquare(x+1,y+1);
+			if (topRight != null && topRight.hasPiece()) {
+				validMoves.add(topRight.getLoc());
+			}
 		} else {
 			validMoves.add(chessboard.getSquare(x,y-1).getLoc());
 			if (!hasMoved) {
 				validMoves.add(chessboard.getSquare(x,y-2).getLoc());
+			}
+			Square bottomLeft = chessboard.getSquare(x-1,y-1);
+			if (bottomLeft != null && bottomLeft.hasPiece()) {
+				validMoves.add(bottomLeft.getLoc());
+			}
+			Square bottomRight = chessboard.getSquare(x+1,y-1);
+			if (bottomRight != null && bottomRight.hasPiece()) {
+				validMoves.add(bottomRight.getLoc());
 			}
 		}
 		return validMoves;

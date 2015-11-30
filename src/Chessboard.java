@@ -111,7 +111,7 @@ public class Chessboard {
 	
 	/**
 	 *  Given two squares, moves the piece in square 1 to square2
-	 *  Does not check validity
+	 *  Does not check validity. Will throw exceptions if bad things happen.
 	 * @param square1 the square containing the piece
 	 * @param square2 the square to move to
 	 */

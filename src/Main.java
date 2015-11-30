@@ -35,7 +35,9 @@ public class Main {
 			String src = sc.nextLine();
 			List<String> validMoves = g.getValidMoves(src);
 			//If validMoves is null, then no piece was found, or the input was invalid
-			if (validMoves != null) {
+			if (validMoves == null) {
+				System.out.println("No piece found.");
+			} else {
 				if (validMoves.size() == 0) {
 					System.out.println("That piece has no valid moves. Choose another.");
 				} else {	
@@ -56,10 +58,7 @@ public class Main {
 					    	System.out.println("Error, invalid move");
 					    }
 				    }
-				}
-		    } else {
-				System.out.println("No piece found.");
-				//Asks again
+				}				
 			}
 		}
 	}
