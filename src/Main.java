@@ -42,7 +42,8 @@ public class Main {
 		    	while (validInput == false) {
 		    		System.out.print("Choose a square to move to (q to back): ");
 				    String dest = sc.nextLine();
-				    if (dest.equals("q")) {
+				    dest = dest.toUpperCase();
+				    if (dest.equals("Q")) {
 				    	validInput = true; //Exits inner loop and asks for another piece
 				    } else if (validMoves.contains(dest)) {
 				    	g.makeMove(src, dest);
