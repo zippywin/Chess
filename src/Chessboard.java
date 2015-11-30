@@ -58,8 +58,8 @@ public class Chessboard {
 		place(new Rook(this,"A1",Game.WHITE),0,0);
 		place(new Knight(this,"B1",Game.WHITE),1,0);
 		place(new Bishop(this,"C1",Game.WHITE),2,0);
-		place(whiteKing,3,0);
-		place(new Queen(this,"E1",Game.WHITE),4,0);
+		place(new Queen(this,"D1",Game.WHITE),3,0);
+		place(whiteKing,4,0);
 		place(new Bishop(this,"F1",Game.WHITE),5,0);
 		place(new Knight(this,"G1",Game.WHITE),6,0);
 		place(new Rook(this,"H1",Game.WHITE),7,0);
@@ -68,8 +68,8 @@ public class Chessboard {
 		place(new Rook(this,"A8",Game.BLACK),0,7);
 		place(new Knight(this,"B8",Game.BLACK),1,7);
 		place(new Bishop(this,"C8",Game.BLACK),2,7);
-		place(blackKing,3,7);
-		place(new Queen(this,"E8",Game.BLACK),4,7);
+		place(new Queen(this,"D8",Game.BLACK),3,7);
+		place(blackKing,4,7);
 		place(new Bishop(this,"F8",Game.BLACK),5,7);
 		place(new Knight(this,"G8",Game.BLACK),6,7);
 		place(new Rook(this,"H8",Game.BLACK),7,7);

@@ -128,7 +128,7 @@ public class Main {
     	assert(board.getSquare("A1").getRank()==1);
     	assert(board.getPiece("A1")!= null);
     	assert(board.getPiece("A1") instanceof Rook);
-    	assert(board.getPiece("E1") instanceof Queen);
+    	assert(board.getPiece("D1") instanceof Queen);
     	assert(board.getPiece("C2") instanceof Pawn);
     	assert(board.getPiece("A8") instanceof Rook);
     	
