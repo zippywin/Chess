@@ -45,7 +45,6 @@ public class Queen implements Piece {
         emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHWEST));
         emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.WEST));
         emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHWEST));
-        System.out.println("Empty square size: " + emptySquares.size());
 
         for (Square square : emptySquares) {
             if (!square.hasPiece()) {
@@ -54,7 +53,6 @@ public class Queen implements Piece {
                 possibleMoves.add(square.getLoc());
             }
         }
-        System.out.println("Number of possible moves: " + possibleMoves.size());
 
         return possibleMoves;
     }

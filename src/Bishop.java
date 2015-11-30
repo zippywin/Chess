@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +34,24 @@ public class Bishop implements Piece {
 
     @Override
     public List<String> getValidMoves() {
-        return null;
+
+        List<String> possibleMoves = new ArrayList<String>();
+        List<Square> emptySquares = new ArrayList<Square>();
+
+        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHEAST));
+        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHEAST));
+        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHWEST));
+        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHWEST));
+
+        for (Square square : emptySquares) {
+            if (!square.hasPiece()) {
+                possibleMoves.add(square.getLoc());
+            } else if (square.getPiece().getPlayer() != colour) {
+                possibleMoves.add(square.getLoc());
+            }
+        }
+
+        return possibleMoves;
     }
 
 	@Override
