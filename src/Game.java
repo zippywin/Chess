@@ -50,8 +50,8 @@ public class Game {
 			board.place(new Pawn(board,i,6,BLACK),i,6);
 		}
 		//Initing the back row
-		whiteKing = new King(board, 3, 0, WHITE);
-		blackKing = new King(board, 3, 7, BLACK);
+		whiteKing = new King(board, 4, 0, WHITE);
+		blackKing = new King(board, 4, 7, BLACK);
 		
 		board.place(new Rook(board, 0, 0, WHITE), 0, 0);
 		board.place(new Knight(board, 1, 0, WHITE), 1, 0);
