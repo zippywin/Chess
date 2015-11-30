@@ -54,6 +54,21 @@ public class Chessboard {
 	}
 	
 	/**
+	 * Given the coordinates of a square, returns the piece on that square
+	 * @param x the x coordinate of the square
+	 * @param y the y coordinates of the square
+	 * @return the piece on that square, if any. Null if none exists.
+	 */
+	public Piece getPiece(int x, int y) {
+		Piece p = null;
+		Square sq = getSquare(x,y);
+		if (sq != null) {
+			p = sq.getPiece();
+		}
+		return p;
+	}
+	
+	/**
 	 * Places a piece on the board
 	 * @param p the piece to be placed
 	 * @param x the x coordinate of the square to place
@@ -179,35 +194,43 @@ public class Chessboard {
 	public List<Square> getEmptySquaresToPiece(int x, int y, int direction) {
 		List<Square> listOfSquares = new LinkedList<Square>();
 		boolean pieceFound = false;
-		while (!pieceFound && 0 < y && y < 7 && 0 < x && x < 7) {
-			if (direction == NORTH) {
-				y++;
-			} else if (direction == NORTHEAST) {
-				y++;
-				x++;
-			} else if (direction == EAST) {
-				x++;
-			} else if (direction == SOUTHEAST) {
-				x++;
-				y--;
-			} else if (direction == SOUTH) {
-				y--;
-			} else if (direction == SOUTHWEST) {
-				y--;
-				x--;
-			} else if (direction == WEST) {
-				x--;
-			} else if (direction == NORTHWEST) {
-				y++;
-				x--;
-			}
-			Square sq = getSquare(x,y);
-			listOfSquares.add(sq);
-			if (sq.hasPiece()) {
+		Square curr = getSquare(x,y);
+		curr = getNextSquare(curr, direction);
+		while (!pieceFound && curr != null) {
+			listOfSquares.add(curr);
+			if (curr.hasPiece()) {
 				pieceFound = true;
 			}
+			curr = getNextSquare(curr, direction);
 		}
 		return listOfSquares;
+	}
+	
+	public Square getNextSquare(Square sq, int direction) {
+		int x = sq.getX();
+		int y = sq.getY();
+		if (direction == NORTH) {
+			y++;
+		} else if (direction == NORTHEAST) {
+			y++;
+			x++;
+		} else if (direction == EAST) {
+			x++;
+		} else if (direction == SOUTHEAST) {
+			x++;
+			y--;
+		} else if (direction == SOUTH) {
+			y--;
+		} else if (direction == SOUTHWEST) {
+			y--;
+			x--;
+		} else if (direction == WEST) {
+			x--;
+		} else if (direction == NORTHWEST) {
+			y++;
+			x--;
+		}
+		return getSquare(x,y);
 	}
 	
 	/**
@@ -235,4 +258,6 @@ public class Chessboard {
 	public boolean willBeInCheck(int x1, int y1, int x2, int y2) {
 		return false;
 	}
+
+	
 }

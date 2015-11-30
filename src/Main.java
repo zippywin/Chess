@@ -139,6 +139,7 @@ public class Main {
     	board.makeMove("D2", "D4");
     	System.out.println("  Moving a pawn from D2 to D4");
     	assert(board.getPiece("D2") == null);
+    	assert(board.getPiece(3,2) == null);
     	assert(board.getPiece("D4") instanceof Pawn);   	
     	
     	board.printBoard();
@@ -157,7 +158,21 @@ public class Main {
     	assert(squares.contains(board.getSquare(4,4)));
     	assert(squares.contains(board.getSquare(5,5)));
     	assert(squares.contains(board.getSquare(6,6)));
+    	squares = board.getEmptySquaresToPiece(3, 0, Chessboard.NORTH);
+    	assert(squares.contains(board.getSquare(3,1)));
+    	assert(squares.contains(board.getSquare(3,2)));
+    	assert(squares.contains(board.getSquare(3,3)));
+    	
     	System.out.println("  passed!");
+    	
+    	System.out.println("Testing validMoves");
+    	Piece p = board.getSquare(3,0).getPiece();
+    	assert(p instanceof Queen);
+    	List<String> queenValidMoves = p.getValidMoves();
+    	assert(queenValidMoves.size() == 2);
+    	assert(queenValidMoves.contains("D2"));
+    	assert(queenValidMoves.contains("D3"));
+    	assert(!queenValidMoves.contains("D4"));
     	
     	System.out.println("Testing checks");
     	
