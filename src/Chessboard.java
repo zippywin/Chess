@@ -116,8 +116,10 @@ public class Chessboard {
 	 * @param square2 the square to move to
 	 */
 	public void makeMove(String square1, String square2) {
+		Square dest = getSquare(square2);
 		Piece p = getSquare(square1).removePiece();
-		getSquare(square2).placePiece(p);
+		p.move(dest.getX(), dest.getY());
+		dest.placePiece(p);
 	}
 	
 	/**
@@ -127,6 +129,7 @@ public class Chessboard {
 	 */
 	public void makeMove(Square sq1, Square sq2) {
 		Piece p = sq1.removePiece();
+		p.move(sq2.getX(), sq2.getY());
 		sq2.placePiece(p);
 	}
 	

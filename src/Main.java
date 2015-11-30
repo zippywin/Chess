@@ -36,23 +36,27 @@ public class Main {
 			List<String> validMoves = g.getValidMoves(src);
 			//If validMoves is null, then no piece was found, or the input was invalid
 			if (validMoves != null) {
-			    System.out.println("Valid Moves:" + validMoves);
-			    boolean validInput = false;
-			    //Loop until user inputs a valid input
-		    	while (validInput == false) {
-		    		System.out.print("Choose a square to move to (q to back): ");
-				    String dest = sc.nextLine();
-				    dest = dest.toUpperCase();
-				    if (dest.equals("Q")) {
-				    	validInput = true; //Exits inner loop and asks for another piece
-				    } else if (validMoves.contains(dest)) {
-				    	g.makeMove(src, dest);
-				    	validInput = true;
-				    	moveMade = true;
-				    } else {
-				    	System.out.println("Error, invalid move");
+				if (validMoves.size() == 0) {
+					System.out.println("That piece has no valid moves. Choose another.");
+				} else {	
+				    System.out.println("Valid Moves:" + validMoves);
+				    boolean validInput = false;
+				    //Loop until user inputs a valid input
+			    	while (validInput == false) {
+			    		System.out.print("Choose a square to move to (q to back): ");
+					    String dest = sc.nextLine();
+					    dest = dest.toUpperCase();
+					    if (dest.equals("Q")) {
+					    	validInput = true; //Exits inner loop and asks for another piece
+					    } else if (validMoves.contains(dest)) {
+					    	g.makeMove(src, dest);
+					    	validInput = true;
+					    	moveMade = true;
+					    } else {
+					    	System.out.println("Error, invalid move");
+					    }
 				    }
-			    }
+				}
 		    } else {
 				System.out.println("No piece found.");
 				//Asks again
