@@ -13,9 +13,6 @@ public class Chessboard {
 	
 	private Square[][] board;
 	
-	private King blackKing;
-	private King whiteKing;
-	
 	private List<Piece> blackPieces;
 	private List<Piece> whitePieces;
 	
@@ -40,39 +37,6 @@ public class Chessboard {
 		}
 		whitePieces = new LinkedList<Piece>();
 		blackPieces = new LinkedList<Piece>();
-	}
-	
-	/**
-	 * Initializes the chessboard to the starting state of a game.
-	 */
-	public void init() {
-		//Placing pawns
-		for (int i = 0; i < 8; i++) {
-			place(new Pawn(this,i,1,Game.WHITE),i,1);
-			place(new Pawn(this,i,6,Game.BLACK),i,6);
-		}
-		//Initing the back row
-		whiteKing = new King(this,3,0,Game.WHITE);
-		blackKing = new King(this,3,7,Game.BLACK);
-		
-		place(new Rook(this,"A1",Game.WHITE),0,0);
-		place(new Knight(this,"B1",Game.WHITE),1,0);
-		place(new Bishop(this,"C1",Game.WHITE),2,0);
-		place(new Queen(this,"D1",Game.WHITE),3,0);
-		place(whiteKing,4,0);
-		place(new Bishop(this,"F1",Game.WHITE),5,0);
-		place(new Knight(this,"G1",Game.WHITE),6,0);
-		place(new Rook(this,"H1",Game.WHITE),7,0);
-		
-		//Initing the front row
-		place(new Rook(this,"A8",Game.BLACK),0,7);
-		place(new Knight(this,"B8",Game.BLACK),1,7);
-		place(new Bishop(this,"C8",Game.BLACK),2,7);
-		place(new Queen(this,"D8",Game.BLACK),3,7);
-		place(blackKing,4,7);
-		place(new Bishop(this,"F8",Game.BLACK),5,7);
-		place(new Knight(this,"G8",Game.BLACK),6,7);
-		place(new Rook(this,"H8",Game.BLACK),7,7);
 	}
 	
 	/**
@@ -153,11 +117,19 @@ public class Chessboard {
 	 */
 	public void makeMove(String square1, String square2) {
 		Piece p = getSquare(square1).removePiece();
-		//Code to update the squares the piece used to threaten
 		getSquare(square2).placePiece(p);
-		//Code to update the squares the piece is now threatening.
 	}
-
+	
+	/**
+	 * Given two squares, moves the piece in sq1 to sq2
+	 * @param sq1 The source square
+	 * @param sq2 the destination square
+	 */
+	public void makeMove(Square sq1, Square sq2) {
+		Piece p = sq1.removePiece();
+		sq2.placePiece(p);
+	}
+	
 	/**
 	 * Prints out the chessboard
 	 */
@@ -194,8 +166,15 @@ public class Chessboard {
 		return threatened;
 	}
 	
-	public List<Square> getEmptySquares(int x, int y, int direction) {
-		List<Square> emptySquares = new LinkedList<Square>();
+	/**
+	 * Returns a list of empty squares up to and including the first square to contain a unit
+	 * @param x the x-coordinate to start from  
+	 * @param y the y-coordinate to start from
+	 * @param direction the direction to move in
+	 * @return a list of empty squares up to and including the first square to contain a unit
+	 */
+	public List<Square> getEmptySquaresToPiece(int x, int y, int direction) {
+		List<Square> listOfSquares = new LinkedList<Square>();
 		boolean pieceFound = false;
 		while (!pieceFound && 0 < y && y < 7 && 0 < x && x < 7) {
 			if (direction == NORTH) {
@@ -220,13 +199,12 @@ public class Chessboard {
 				x--;
 			}
 			Square sq = getSquare(x,y);
+			listOfSquares.add(sq);
 			if (sq.hasPiece()) {
-				emptySquares.add(sq);
-			} else {
 				pieceFound = true;
 			}
 		}
-		return emptySquares;
+		return listOfSquares;
 	}
 	
 	/**
@@ -244,20 +222,14 @@ public class Chessboard {
 	}
 	
 	/**
-	 * Returns true if the current player is in check.
-	 * @param player the player to check for check. Defined by Game
-	 * @return true if the player is in check.
+	 * Checks if the following move will result in a check for the moving player
+	 * @param x1 The x coordinate of the piece.
+	 * @param y1 the y coordinate of the piece.
+	 * @param x2 the x coordinate to move to.
+	 * @param y2 the y coordinate to move to.
+	 * @return
 	 */
-	public boolean isInCheck(int player) {
-		King king;
-		int opponent;
-		if (player == Game.WHITE) {
-			king = whiteKing;
-			opponent = Game.BLACK;
-		} else {
-			king = blackKing;
-			opponent = Game.WHITE;
-		}
-		return squareIsThreatened(king.getX(),king.getY(),opponent);
+	public boolean willBeInCheck(int x1, int y1, int x2, int y2) {
+		return false;
 	}
 }

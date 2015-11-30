@@ -61,8 +61,8 @@ public class Main {
 	}
     
     public static void unitTests() {
-    	Chessboard board = new Chessboard();
-    	board.init();
+    	Game g = new Game();
+    	Chessboard board = g.getBoard();
     	
     	System.out.println("--Testing squares--");
     	
@@ -99,7 +99,7 @@ public class Main {
     	System.out.println("  square:"+sq);
     	
     	System.out.println("  Threatening the square with a knight");
-    	Knight knight = new Knight(board,"B3", Game.BLACK);
+    	Knight knight = new Knight(board,1,2, Game.BLACK);
     	sq.threaten(knight);
     	assert(sq.isThreatenedBy(Game.BLACK));
     	assert(!sq.isThreatenedBy(Game.WHITE));
@@ -136,11 +136,27 @@ public class Main {
     	board.makeMove("D2", "D4");
     	System.out.println("  Moving a pawn from D2 to D4");
     	assert(board.getPiece("D2") == null);
-    	assert(board.getPiece("D4") instanceof Pawn);
+    	assert(board.getPiece("D4") instanceof Pawn);   	
     	
     	board.printBoard();
     	
     	System.out.println("Passed!");
+    	
+    	System.out.println("Testing emptySquaresToPiece method");
+    	List<Square> squares = board.getEmptySquaresToPiece(4, 4, Chessboard.NORTH);
+    	assert(squares.size()==2);
+    	assert(!squares.contains(board.getSquare(4,4)));
+    	assert(squares.contains(board.getSquare(4,5)));
+    	assert(squares.contains(board.getSquare(4,6)));
+    	assert(!squares.contains(board.getSquare(4,7)));
+    	squares = board.getEmptySquaresToPiece(3, 3, Chessboard.NORTHEAST);
+    	assert(squares.size()==3);
+    	assert(squares.contains(board.getSquare(4,4)));
+    	assert(squares.contains(board.getSquare(5,5)));
+    	assert(squares.contains(board.getSquare(6,6)));
+    	System.out.println("  passed!");
+    	
+    	System.out.println("Testing checks");
     	
     	System.out.println("All tests passed! You are awesome!");
     }

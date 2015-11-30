@@ -12,7 +12,6 @@ import java.util.List;
  * - Reaching the opposing back rank allows it to promote to any other piece (other than Pawn and King)
  */
 public class Pawn implements Piece{
-    private String location;
     private Chessboard chessboard;
     private int colour;
     private boolean hasMoved;
@@ -24,7 +23,7 @@ public class Pawn implements Piece{
         this.y = y;
         this.chessboard = chessboard;
         this.colour = colour;
-        
+        hasMoved = false;
     }
     
     @Override

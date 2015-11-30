@@ -9,16 +9,22 @@ public class Queen implements Piece {
     private String location;
     private Chessboard chessboard;
     private int colour;
-
-    public Queen(Chessboard chessboard, String location, int colour) {
-        this.location = location;
+    private int x;
+    private int y;
+    
+    public Queen(Chessboard chessboard, int x, int y, int colour) {
+        this.x = x;
+        this.y = y;
         this.chessboard = chessboard;
         this.colour = colour;
     }
 
     @Override
     public String getLocation() {
-        return location;
+        char file = 'A';
+        file += x - 1;
+        int rank = y+1;
+    	return ""+file+rank;
     }
 
     @Override
@@ -33,25 +39,22 @@ public class Queen implements Piece {
 
     @Override
 	public void move(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override
 	public int getPlayer() {
-		// TODO Auto-generated method stub
-		return 0;
+		return colour;
 	}
 
 	@Override
 	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return x;
 	}
 
 	@Override
 	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return y;
 	}
 }
