@@ -82,6 +82,18 @@ public class King implements Piece {
 
         List<Square> adjacentSquares = new ArrayList<Square>();
 
+        for (int i = -1; i < 2; i++) {
+            if (x + i >= 0 && x + i < 8) {
+                for (int j = -1; j < 2; j++) {
+                    if (y + j >= 0 && y + j < 8) {
+                        System.out.println("x = " + (x + i));
+                        System.out.println("y = " + (y + j));
+                        adjacentSquares.add(chessboard.getSquare(x + i, y + j));
+                    }
+                }
+            }
+        }
+        /*
         adjacentSquares.add(chessboard.getSquare(x-1,y-1));
         adjacentSquares.add(chessboard.getSquare(x-1,y));
         adjacentSquares.add(chessboard.getSquare(x-1,y+1));
@@ -90,6 +102,7 @@ public class King implements Piece {
         adjacentSquares.add(chessboard.getSquare(x+1,y-1));
         adjacentSquares.add(chessboard.getSquare(x+1,y));
         adjacentSquares.add(chessboard.getSquare(x+1,y+1));
+        */
 
         for (Square square : adjacentSquares) {
             if (!square.hasPiece()) {
