@@ -16,8 +16,8 @@ public interface Piece {
 	
 	/**
 	 * Returns true if the piece can move to the given square
-	 * @param file the 'file' coordinate
-     * @param rank the 'rank' coordinate
+	 * @param x the 'file' coordinate
+     * @param y the 'rank' coordinate
 	 * @return true if moving to the square is valid 
 	 */
 	public boolean isValidMove(int x, int y);
@@ -28,8 +28,8 @@ public interface Piece {
 	 * Moves the piece to the provided square
 	 * Assuming that it is a valid move
      * Specifically, updates the Piece's location field
-	 * @param file the 'file' coordinate from A-H
-     * @param rank the 'rank' coordinate from 1-8
+	 * @param x the 'file' coordinate from A-H
+     * @param y the 'rank' coordinate from 1-8
 	 */
 	public void move(int x, int y);
 	

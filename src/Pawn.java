@@ -40,6 +40,8 @@ public class Pawn implements Piece{
         return true;
     }
 
+
+
 	@Override
 	public void move(int x, int y) {
 		this.x = x;

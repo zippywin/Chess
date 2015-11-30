@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created by Zippy on 24/11/2015.
  * The Queen is a powerful piece in chess.
@@ -24,7 +26,12 @@ public class Queen implements Piece {
         return true;
     }
 
-	@Override
+    @Override
+    public List<String> getValidMoves() {
+        return null;
+    }
+
+    @Override
 	public void move(int x, int y) {
 		// TODO Auto-generated method stub
 		

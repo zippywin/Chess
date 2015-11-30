@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created by Zippy on 25/11/2015.
  * The Rook is a major piece in chess.
@@ -23,6 +25,11 @@ public class Rook implements Piece {
     @Override
     public boolean isValidMove(int x, int y) {
         return true;
+    }
+
+    @Override
+    public List<String> getValidMoves() {
+        return null;
     }
 
 	@Override

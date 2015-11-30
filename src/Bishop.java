@@ -26,6 +26,11 @@ public class Bishop implements Piece {
         return true;
     }
 
+    @Override
+    public List<String> getValidMoves() {
+        return null;
+    }
+
 	@Override
 	public void move(int x, int y) {
 		// TODO Auto-generated method stub

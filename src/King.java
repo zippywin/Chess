@@ -57,15 +57,15 @@ public class King implements Piece {
     	//TODO I changed the file and rank to x and y so you probably need to recalibrate this. 
         Piece destinationSquare = chessboard.getPiece(""+file+rank);
         List<Square> listOfSquares = new ArrayList<Square>();
-        listOfSquares.add(new Square(this.file--, this.rank--));
-        listOfSquares.add(new Square(this.file--, this.rank));
-        listOfSquares.add(new Square(this.file--, this.rank++));
-        listOfSquares.add(new Square(this.file, this.rank--));
+        listOfSquares.add(new Square(this.file - 1, this.rank - 1));
+        listOfSquares.add(new Square(this.file - 1, this.rank));
+        listOfSquares.add(new Square(this.file - 1, this.rank + 1));
+        listOfSquares.add(new Square(this.file, this.rank - 1));
         listOfSquares.add(new Square(this.file, this.rank));
-        listOfSquares.add(new Square(this.file, this.rank++));
-        listOfSquares.add(new Square(this.file++, this.rank--));
-        listOfSquares.add(new Square(this.file++, this.rank));
-        listOfSquares.add(new Square(this.file++, this.rank++));
+        listOfSquares.add(new Square(this.file, this.rank + 1));
+        listOfSquares.add(new Square(this.file + 1, this.rank - 1));
+        listOfSquares.add(new Square(this.file + 1, this.rank));
+        listOfSquares.add(new Square(this.file + 1, this.rank + 1));
 
         if (file > 'H' || file < 'A' || rank > 8 || rank < 1) {
             return false;
@@ -78,6 +78,11 @@ public class King implements Piece {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public List<String> getValidMoves() {
+        return new ArrayList<String>();
     }
 
 	@Override

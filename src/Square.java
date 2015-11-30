@@ -18,8 +18,8 @@ public class Square {
 	
 	/**
 	 * Creates a square at the chosen location
-	 * @param file the letter representing the column of the square
-	 * @param rank the number representing the row of the square
+	 * @param x the letter representing the column of the square
+	 * @param y the number representing the row of the square
 	 */
 	public Square(int x, int y) {
 		this.x=x;
