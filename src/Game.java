@@ -105,6 +105,7 @@ public class Game {
 	public void makeMove(String square1, String square2) {
 		Square src = board.getSquare(square1);
 		Square dest = board.getSquare(square2);
+        //TODO: Add castling movements special condition
 		Piece p = src.removePiece();
 		p.move(dest.getX(), dest.getY());
 		if (dest.hasPiece()) {
@@ -185,7 +186,7 @@ public class Game {
 
 	/**
 	 * Given the location of a piece, returns a list of locations the player may move to
-	 * @param loc the location of a selected piece
+	 * @param p the location of a selected piece
 	 * @return a list of valid moves. (Null if a piece wasn't found, or if the input is invalid)
 	 */
 	public List<String> getValidMoves(Piece p) {

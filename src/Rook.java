@@ -12,12 +12,14 @@ public class Rook implements Piece {
     private int colour;
     private int x;
     private int y;
+    private boolean hasMoved;
     
     public Rook (Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
         this.y = y;
         this.chessboard = chessboard;
         this.colour = colour;
+        hasMoved = false;
     }
 
     @Override
@@ -74,4 +76,8 @@ public class Rook implements Piece {
 	public int getY() {
 		return y;
 	}
+
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
 }
