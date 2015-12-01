@@ -18,7 +18,7 @@ public class Game {
 	private King blackKing;
 	private List<Piece> takenWhitePieces;
 	private List<Piece> takenBlackPieces;
-	private Square enPassantSquare;
+	private Square enPassantableSquare;
 	
 	/**
 	 *  The integer representing white player
@@ -106,6 +106,11 @@ public class Game {
 		Square src = board.getSquare(square1);
 		Square dest = board.getSquare(square2);
         //TODO: Add castling movements special condition
+		
+		//YM40: I recommend doing the conditions in game's getValidMoves().
+		//      What should go here is a check to see if the king castled, 
+		//        and if it did, move the corresponding rook too. 
+		
 		Piece p = src.removePiece();
 		p.move(dest.getX(), dest.getY());
 		if (dest.hasPiece()) {
@@ -115,11 +120,12 @@ public class Game {
 		dest.placePiece(p);
 		//En Passant logic
 		//First check if en passant was available, and if it was, disable it.
-		if (enPassantSquare != null) {
-			enPassantSquare.setEnPassantable(false);
-			enPassantSquare = null;
+		if (enPassantableSquare != null) {
+			enPassantableSquare.setEnPassantable(false);
+			enPassantableSquare = null;
 		}
-		//Then check if a pawn was double stepped. If it was, record this fact.
+		//Then check if a pawn was double stepped. If it was, enable the square
+		//in between the double step for an en passant move
 		if (p instanceof Pawn) {
 			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
 		}
@@ -137,13 +143,13 @@ public class Game {
 	public void checkIfPawnDoubleStepped(Square src, Square dest, int player) {
 		if (player == WHITE) {
 			if (src.getX() == dest.getX() && src.getY() + 2 == dest.getY()) {
-				enPassantSquare = board.getSquare(src.getX(), src.getY() + 1);
-				enPassantSquare.setEnPassantable(true);
+				enPassantableSquare = board.getSquare(src.getX(), src.getY() + 1);
+				enPassantableSquare.setEnPassantable(true);
 			}
 		} else {
 			if (src.getX() == dest.getX() && src.getY() - 2 == dest.getY()) {
-				enPassantSquare = board.getSquare(src.getX(), src.getY() - 1);
-				enPassantSquare.setEnPassantable(true);
+				enPassantableSquare = board.getSquare(src.getX(), src.getY() - 1);
+				enPassantableSquare.setEnPassantable(true);
 			}
 		}
 	}
