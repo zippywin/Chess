@@ -107,10 +107,6 @@ public class Game {
 		Square dest = board.getSquare(square2);
         //TODO: Add castling movements special condition
 		
-		//YM40: I recommend doing the conditions in game's getValidMoves().
-		//      What should go here is a check to see if the king castled, 
-		//        and if it did, move the corresponding rook too. 
-		
 		Piece p = src.removePiece();
 		p.move(dest.getX(), dest.getY());
 		if (dest.hasPiece()) {

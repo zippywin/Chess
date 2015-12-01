@@ -75,7 +75,6 @@ public class King implements Piece {
          */
 
         return true;
-    	//TODO I changed the file and rank to x and y so you probably need to recalibrate this.
     }
 
     @Override
