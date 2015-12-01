@@ -177,7 +177,52 @@ public class Main {
     	assert(queenValidMoves.contains("D3"));
     	assert(!queenValidMoves.contains("D4"));
     	
+    	System.out.println("Moving pawn from E7 to E5");
+    	g.makeMove("E7", "E5");
+    	assert(board.getSquare("E5").hasPiece());
+    	assert(board.getSquare("E5").getPiece() instanceof Pawn);
+    	assert(board.getSquare("E5").getPiece().getLocation().equals("E5"));
+    	
+    	assert(board.getSquare("D4").hasPiece());
+    	assert(board.getSquare("D4").getPiece() instanceof Pawn);
+ 
+    	p = board.getSquare("D4").getPiece();
+    	assert(p.getLocation().equals("D4"));
+    	List<String> pawnValidMoves = g.getValidMoves(p);
+    	assert(pawnValidMoves.size() == 2);
+    	assert(pawnValidMoves.contains("D5"));
+    	assert(pawnValidMoves.contains("E5"));
+    	assert(!pawnValidMoves.contains("D6"));
+    	board.printBoard();
+    	
+    	System.out.println("Capturing the pawn on E5");
+    	g.makeMove("D4", "E5");
+    	assert(board.getSquare("E5").hasPiece());
+    	assert(board.getSquare("E5").getPiece().getPlayer() == Game.WHITE);
+    	
+    	System.out.println("Moving pawn from D7 to D5");
+    	g.makeMove("D7", "D5");
+    	board.printBoard();
+    	assert(board.getSquare("D5").getPiece() instanceof Pawn);
+    	assert(board.getSquare("D6").enPassantAvailable() == true);
+    	pawnValidMoves = board.getSquare("E5").getPiece().getValidMoves();
+    	assert(pawnValidMoves.size() == 2);
+    	assert(pawnValidMoves.contains("E6"));
+    	assert(pawnValidMoves.contains("D6"));
+    	
     	System.out.println("Testing checks");
+    	
+    	System.out.println("Moving pawn A2 to A4");
+    	g.makeMove("A2", "A4");
+    	
+    	System.out.println("Moving a knight from B8 to C6");
+    	g.makeMove("B8", "C6");
+    	board.printBoard();
+    	assert(board.getSquare("D6").enPassantAvailable() == false);
+    	pawnValidMoves = board.getSquare("E5").getPiece().getValidMoves();
+    	assert(pawnValidMoves.size() == 1);
+    	assert(pawnValidMoves.contains("E6"));
+    	System.out.println("Passed!");
     	
     	System.out.println("All tests passed! You are awesome!");
     }

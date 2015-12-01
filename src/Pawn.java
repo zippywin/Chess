@@ -29,7 +29,7 @@ public class Pawn implements Piece{
     @Override
     public String getLocation() {
         char file = 'A';
-        file += x - 1;
+        file += x;
         int rank = y+1;
     	return ""+file+rank;
     }
@@ -72,11 +72,11 @@ public class Pawn implements Piece{
 				validMoves.add(chessboard.getSquare(x,y+2).getLoc());
 			}
 			Square topLeft = chessboard.getSquare(x-1,y+1);
-			if (topLeft != null && topLeft.hasPiece()) {
+			if (topLeft != null && diagonalSquareValid(topLeft) == true) {
 				validMoves.add(topLeft.getLoc());
 			} 
 			Square topRight = chessboard.getSquare(x+1,y+1);
-			if (topRight != null && topRight.hasPiece()) {
+			if (topRight != null && diagonalSquareValid(topRight) == true) {
 				validMoves.add(topRight.getLoc());
 			}
 		} else {
@@ -85,14 +85,25 @@ public class Pawn implements Piece{
 				validMoves.add(chessboard.getSquare(x,y-2).getLoc());
 			}
 			Square bottomLeft = chessboard.getSquare(x-1,y-1);
-			if (bottomLeft != null && bottomLeft.hasPiece()) {
+			if (bottomLeft != null && diagonalSquareValid(bottomLeft) == true) {
 				validMoves.add(bottomLeft.getLoc());
 			}
 			Square bottomRight = chessboard.getSquare(x+1,y-1);
-			if (bottomRight != null && bottomRight.hasPiece()) {
+			if (bottomRight != null && diagonalSquareValid(bottomRight) == true) {
 				validMoves.add(bottomRight.getLoc());
 			}
 		}
 		return validMoves;
+	}
+	
+	public boolean diagonalSquareValid(Square diagonal) {
+		if (diagonal != null) {
+			if (diagonal.hasPiece() && diagonal.getPiece().getPlayer() == Game.opponent(colour)) {
+				return true;
+			} else if (diagonal.enPassantAvailable()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

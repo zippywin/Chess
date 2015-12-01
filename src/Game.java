@@ -18,6 +18,7 @@ public class Game {
 	private King blackKing;
 	private List<Piece> takenWhitePieces;
 	private List<Piece> takenBlackPieces;
+	private Square enPassantSquare;
 	
 	/**
 	 *  The integer representing white player
@@ -111,7 +112,39 @@ public class Game {
 			takePiece(dest);
 		}
 		dest.placePiece(p);
+		//En Passant logic
+		//First check if en passant was available, and if it was, disable it.
+		if (enPassantSquare != null) {
+			enPassantSquare.setEnPassantable(false);
+			enPassantSquare = null;
+		}
+		//Then check if a pawn was double stepped. If it was, record this fact.
+		if (p instanceof Pawn) {
+			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
+		}
 		nextTurn();
+	}
+	
+	/**
+	 * Checks if moving from src to dest is a double step
+	 * And if it is, records this fact on the square and within this object
+	 * Assumes the piece being moved is actually a pawn. 
+	 * @param src the square where the pawn was
+	 * @param dest the square where the pawn now is
+	 * @param player the owner of the pawn
+	 */
+	public void checkIfPawnDoubleStepped(Square src, Square dest, int player) {
+		if (player == WHITE) {
+			if (src.getX() == dest.getX() && src.getY() + 2 == dest.getY()) {
+				enPassantSquare = board.getSquare(src.getX(), src.getY() + 1);
+				enPassantSquare.setEnPassantable(true);
+			}
+		} else {
+			if (src.getX() == dest.getX() && src.getY() - 2 == dest.getY()) {
+				enPassantSquare = board.getSquare(src.getX(), src.getY() - 1);
+				enPassantSquare.setEnPassantable(true);
+			}
+		}
 	}
 	
 	public void takePiece(Square sq) {
@@ -183,7 +216,7 @@ public class Game {
 	 */
 	public boolean isInCheck(int player) {
 		King king = getKing(player);
-		return board.squareIsThreatened(king.getX(),king.getY(),opponent(player));
+		return board.squareIsThreatened(king.getX(), king.getY(), opponent(player));
 	}
 
 	/**
@@ -191,7 +224,7 @@ public class Game {
 	 * @param player the given player
 	 * @return the opponent
 	 */
-	private int opponent(int player) {
+	public static int opponent(int player) {
 		if (player == Game.WHITE) {
 			return Game.BLACK;
 		} else {
