@@ -150,14 +150,16 @@ public class Chessboard {
 	 * @return true if the square is being threatened
 	 */
 	public boolean squareIsThreatened(int x, int y, int player) {
-		boolean threatened = false;
 		Square sq = getSquare(x,y);
+		String loc = sq.getLoc();
 		if (sq != null) {
 			for (Piece p : getPiecesOwnedBy(player)) {
-				if (p.isValidMove(x, y));
+				if (p.getValidMoves().contains(loc)) {
+					return true;
+				}
 			}
 		}
-		return threatened;
+		return false;
 	}
 	
 	/**

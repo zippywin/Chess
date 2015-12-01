@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -196,9 +197,11 @@ public class Game {
 		if (p != null) {
 			moves = p.getValidMoves();
 		}
-		for (String move : moves) {
+		Iterator<String> iter = moves.iterator();
+		while (iter.hasNext()) {
+			String move = iter.next();
 			if (willResultInCheck(p.getLocation(), move)) {
-				moves.remove(move);
+				iter.remove();
 			}
 		}
 		return moves;

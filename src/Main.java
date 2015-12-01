@@ -168,7 +168,7 @@ public class Main {
     	
     	System.out.println("Passed!");
     	
-    	System.out.println("Testing validMoves");
+    	System.out.println("==Testing validMoves==");
     	Piece p = board.getSquare(3,0).getPiece();
     	assert(p instanceof Queen);
     	List<String> queenValidMoves = p.getValidMoves();
@@ -210,19 +210,42 @@ public class Main {
     	assert(pawnValidMoves.contains("E6"));
     	assert(pawnValidMoves.contains("D6"));
     	
-    	System.out.println("Testing checks");
-    	
-    	System.out.println("Moving pawn A2 to A4");
-    	g.makeMove("A2", "A4");
-    	
-    	System.out.println("Moving a knight from B8 to C6");
-    	g.makeMove("B8", "C6");
+    	System.out.println("Moving pawn E2 to E4");
+    	g.makeMove("E2", "E4");
+    	System.out.println("Moving a knight from B8 to A6");
+    	g.makeMove("B8", "A6");
     	board.printBoard();
+    	
     	assert(board.getSquare("D6").enPassantAvailable() == false);
     	pawnValidMoves = board.getSquare("E5").getPiece().getValidMoves();
     	assert(pawnValidMoves.size() == 1);
     	assert(pawnValidMoves.contains("E6"));
+    	
+    	p = board.getPiece("F1");
+    	assert(p instanceof Bishop);
+    	List<String> bishopValidMoves = p.getValidMoves();
+    	assert(bishopValidMoves.size() == 5);
+    	assert(bishopValidMoves.contains("E2"));
+    	assert(bishopValidMoves.contains("D3"));
+    	assert(bishopValidMoves.contains("C4"));
+    	assert(bishopValidMoves.contains("B5"));
+    	assert(bishopValidMoves.contains("A6"));
+    	
     	System.out.println("Passed!");
+    	
+    	System.out.println("==Testing checks==");
+    	System.out.println("Moving Bishop from F1 to B5");
+    	g.makeMove("F1", "B5");
+    	board.printBoard();
+    	assert(p.getLocation().equals("B5"));
+    	assert(board.squareIsThreatened(4, 7, Game.WHITE) == true);
+    	assert(g.isInCheck(Game.BLACK) == true);
+    	assert(g.isInCheck(Game.WHITE) == false);
+    	assert(g.getValidMoves(board.getPiece("B7")).size() == 0);
+    	assert(g.getValidMoves(board.getPiece("C8")).size() == 1);
+    	assert(g.getValidMoves(board.getPiece("E8")).size() == 1);
+    	assert(g.getValidMoves(board.getPiece("D8")).size() == 1);
+    	assert(g.getValidMoves(board.getPiece("F8")).size() == 0);
     	
     	System.out.println("All tests passed! You are awesome!");
     }

@@ -58,7 +58,10 @@ public class King implements Piece {
 
     @Override
     public String getLocation() {
-        return "" + file + rank;
+    	char file = 'A';
+        file += x;
+        int rank = y+1;
+    	return ""+file+rank;
     }
 
     @Override

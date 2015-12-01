@@ -66,33 +66,35 @@ public class Pawn implements Piece{
 	@Override
 	public List<String> getValidMoves() {
 		List<String> validMoves = new LinkedList<String>();
+		int x = this.x;
+		int y = this.y;
+		Square forward = null;
+		Square doubleForward = null;
 		if (colour == Game.WHITE) {
-			validMoves.add(chessboard.getSquare(x,y+1).getLoc());
-			if (!hasMoved) {
-				validMoves.add(chessboard.getSquare(x,y+2).getLoc());
-			}
-			Square topLeft = chessboard.getSquare(x-1,y+1);
-			if (topLeft != null && diagonalSquareValid(topLeft) == true) {
-				validMoves.add(topLeft.getLoc());
-			} 
-			Square topRight = chessboard.getSquare(x+1,y+1);
-			if (topRight != null && diagonalSquareValid(topRight) == true) {
-				validMoves.add(topRight.getLoc());
-			}
+			y++;
+			forward = chessboard.getSquare(x, y);
+			doubleForward = chessboard.getSquare(x, y + 1);
 		} else {
-			validMoves.add(chessboard.getSquare(x,y-1).getLoc());
-			if (!hasMoved) {
-				validMoves.add(chessboard.getSquare(x,y-2).getLoc());
-			}
-			Square bottomLeft = chessboard.getSquare(x-1,y-1);
-			if (bottomLeft != null && diagonalSquareValid(bottomLeft) == true) {
-				validMoves.add(bottomLeft.getLoc());
-			}
-			Square bottomRight = chessboard.getSquare(x+1,y-1);
-			if (bottomRight != null && diagonalSquareValid(bottomRight) == true) {
-				validMoves.add(bottomRight.getLoc());
-			}
+			y--;
+			forward = chessboard.getSquare(x, y - 1);
 		}
+		
+		if (forward != null && !forward.hasPiece()) {
+			validMoves.add(forward.getLoc());
+		}
+		if (!hasMoved && doubleForward != null && !doubleForward.hasPiece()) {
+			validMoves.add(doubleForward.getLoc());
+		}
+		
+		Square leftDiagonal = chessboard.getSquare(x - 1, y);
+		if (leftDiagonal != null && diagonalSquareValid(leftDiagonal) == true) {
+			validMoves.add(leftDiagonal.getLoc());
+		} 
+		Square rightDiagonal = chessboard.getSquare(x + 1, y);
+		if (rightDiagonal != null && diagonalSquareValid(rightDiagonal) == true) {
+			validMoves.add(rightDiagonal.getLoc());
+		}
+		
 		return validMoves;
 	}
 	

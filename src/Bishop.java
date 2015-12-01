@@ -22,7 +22,7 @@ public class Bishop implements Piece {
     @Override
     public String getLocation() {
         char file = 'A';
-        file += x - 1;
+        file += x;
         int rank = y+1;
     	return ""+file+rank;
     }
