@@ -56,4 +56,10 @@ public interface Piece {
 	 * @return the y coordinate of this piece
 	 */
 	public int getY();
+
+    /**
+     * Returns whether or not the piece has moved
+     * @return true if the piece has moved, false otherwise
+     */
+    public boolean isHasMoved();
 }

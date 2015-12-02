@@ -12,12 +12,14 @@ public class Knight implements Piece{
     private int colour;
     private int x;
     private int y;
+    private boolean hasMoved;
 
     public Knight (Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
         this.y = y;
         this.chessboard = chessboard;
         this.colour = colour;
+        hasMoved = false;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class Knight implements Piece{
 	public void move(int x, int y) {
 		this.x = x;
 		this.y = y;
+        hasMoved = true;
 	}
 
 	@Override
@@ -75,5 +78,10 @@ public class Knight implements Piece{
 	public int getY() {
 		return y;
 	}
+
+    @Override
+    public boolean isHasMoved() {
+        return false;
+    }
 
 }

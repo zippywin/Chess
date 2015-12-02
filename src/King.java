@@ -95,6 +95,27 @@ public class King implements Piece {
                 }
             }
         }
+        if (!hasMoved) {
+            if (chessboard.squareIsThreatened(x, y, colour)) {
+                Square leftCastle = chessboard.getSquare(x - 2, y);
+                Square rightCastle = chessboard.getSquare(x + 2, y);
+
+                if (chessboard.getSquare(x - 4, y).hasPiece()) {
+                    if (!chessboard.getSquare(x - 4, y).getPiece().isHasMoved()) {
+                        if (!chessboard.squareIsThreatened(x - 1, y, colour) && !chessboard.squareIsThreatened(x - 2, y, colour)) {
+                            possibleMoves.add(leftCastle.getLoc());
+                        }
+                    }
+                }
+                if (chessboard.getSquare(x + 3, y).hasPiece()) {
+                    if (!chessboard.getSquare(x + 3, y).getPiece().isHasMoved()) {
+                        if (!chessboard.squareIsThreatened(x + 1, y, colour) && !chessboard.squareIsThreatened(x + 2, y, colour)) {
+                            possibleMoves.add(rightCastle.getLoc());
+                        }
+                    }
+                }
+            }
+        }
         //TODO: add castling logic here.
 
         /*
@@ -139,5 +160,10 @@ public class King implements Piece {
 	public int getY() {
 		return y;
 	}
+
+    @Override
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
 
 }

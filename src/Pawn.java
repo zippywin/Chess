@@ -63,7 +63,12 @@ public class Pawn implements Piece{
 		return y;
 	}
 
-	@Override
+    @Override
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
+
+    @Override
 	public List<String> getValidMoves() {
 		List<String> validMoves = new LinkedList<String>();
 		int x = this.x;
