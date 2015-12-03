@@ -19,6 +19,7 @@ public class King implements Piece {
     private Chessboard chessboard;
     private int colour;
     private boolean hasMoved;
+    private boolean taken;
 
     private List<Square> movementRange = new ArrayList<Square>(); //Stores basic logic of movement
 
@@ -38,7 +39,7 @@ public class King implements Piece {
         this.chessboard = chessboard;
         this.colour = colour;
         hasMoved = false;
-
+        taken = false;
         //createMovementRange();
     }
 
@@ -95,31 +96,6 @@ public class King implements Piece {
                 }
             }
         }
-        if (!hasMoved) {
-            if (chessboard.squareIsThreatened(x, y, colour)) {
-                Square leftCastle = chessboard.getSquare(x - 2, y);
-                Square rightCastle = chessboard.getSquare(x + 2, y);
-
-                if (!chessboard.getSquare(x - 1, y).hasPiece() && !chessboard.getSquare(x - 2, y).hasPiece() && !chessboard.getSquare(x - 3, y).hasPiece()) {
-                    if (chessboard.getSquare(x - 4, y).hasPiece()) {
-                        if (!chessboard.getSquare(x - 4, y).getPiece().isHasMoved()) {
-                            if (!chessboard.squareIsThreatened(x - 1, y, colour) && !chessboard.squareIsThreatened(x - 2, y, colour)) {
-                                possibleMoves.add(leftCastle.getLoc());
-                            }
-                        }
-                    }
-                }
-                if (!chessboard.getSquare(x + 1, y).hasPiece() && !chessboard.getSquare(x + 2, y).hasPiece()) {
-                    if (chessboard.getSquare(x + 3, y).hasPiece()) {
-                        if (!chessboard.getSquare(x + 3, y).getPiece().isHasMoved()) {
-                            if (!chessboard.squareIsThreatened(x + 1, y, colour) && !chessboard.squareIsThreatened(x + 2, y, colour)) {
-                                possibleMoves.add(rightCastle.getLoc());
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         /*
         adjacentSquares.add(chessboard.getSquare(x-1,y-1));
@@ -165,8 +141,17 @@ public class King implements Piece {
 	}
 
     @Override
-    public boolean isHasMoved() {
+    public boolean hasMoved() {
         return hasMoved;
     }
 
+    @Override
+	public boolean hasBeenTaken() {
+		return taken;
+	}
+
+	@Override
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
 }

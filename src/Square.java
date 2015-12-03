@@ -71,7 +71,7 @@ public class Square {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Returns the piece currently occupying this square, or null if there isn't any
 	 * @return the piece currently occupying this square.

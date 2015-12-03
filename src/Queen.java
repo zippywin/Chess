@@ -13,6 +13,7 @@ public class Queen implements Piece {
     private int x;
     private int y;
     private boolean hasMoved;
+    private boolean taken;
     
     public Queen(Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
@@ -20,6 +21,7 @@ public class Queen implements Piece {
         this.chessboard = chessboard;
         this.colour = colour;
         hasMoved = false;
+        taken = false;
     }
 
     @Override
@@ -82,7 +84,17 @@ public class Queen implements Piece {
 	}
 
     @Override
-    public boolean isHasMoved() {
+    public boolean hasMoved() {
         return hasMoved;
     }
+    
+    @Override
+	public boolean hasBeenTaken() {
+		return taken;
+	}
+
+	@Override
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
 }

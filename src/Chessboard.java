@@ -154,7 +154,7 @@ public class Chessboard {
 		String loc = sq.getLoc();
 		if (sq != null) {
 			for (Piece p : getPiecesOwnedBy(player)) {
-				if (p.getValidMoves().contains(loc)) {
+				if (!p.hasBeenTaken() && p.getValidMoves().contains(loc)) {
 					return true;
 				}
 			}

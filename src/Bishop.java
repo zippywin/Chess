@@ -12,6 +12,7 @@ public class Bishop implements Piece {
     private int x;
     private int y;
     private boolean hasMoved;
+    private boolean taken;
     
     public Bishop (Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
@@ -19,6 +20,7 @@ public class Bishop implements Piece {
         this.chessboard = chessboard;
         this.colour = colour;
         hasMoved = false;
+        taken = false;
     }
 
     @Override
@@ -79,8 +81,17 @@ public class Bishop implements Piece {
 	}
 
     @Override
-    public boolean isHasMoved() {
+    public boolean hasMoved() {
         return hasMoved;
     }
 
+    @Override
+	public boolean hasBeenTaken() {
+		return taken;
+	}
+
+	@Override
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
 }

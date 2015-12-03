@@ -116,6 +116,7 @@ public class Game {
 		dest.placePiece(p);
 		//En Passant logic
 		//First check if en passant was available, and if it was, unmark it.
+		Square previousEnPassantableSquare = enPassantableSquare;
 		if (enPassantableSquare != null) {
 			enPassantableSquare.setEnPassantable(false);
 			enPassantableSquare = null;
@@ -124,6 +125,8 @@ public class Game {
 		//in between the double step for an en passant move
 		if (p instanceof Pawn) {
 			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
+			checkIfPawnEnPassanted(src, dest, previousEnPassantableSquare, (Pawn) p);
+			//checkifPawnPromoted(p);
 		}
 
         //Castling logic here
@@ -168,13 +171,38 @@ public class Game {
 		}
 	}
 	
-	public void takePiece(Square sq) {
-		int player = sq.getPiece().getPlayer();
-		if (player == WHITE) {
-			takenWhitePieces.add(sq.removePiece());
-		} else {
-			takenBlackPieces.add(sq.removePiece());
+	/**
+	 * Checks if the move made was an en passant move, and if it is, removes the pawn that should be taken
+	 * @param src the src square
+	 * @param dest the dest square
+	 * @param previousEnPassantableSquare the square previously marked enpassantable
+	 * @param p the pawn
+	 */
+	private void checkIfPawnEnPassanted(Square src, Square dest, Square previousEnPassantableSquare, Pawn p) {
+		if (previousEnPassantableSquare == dest) {
+			if (src.getX() == dest.getX() + 1 || src.getX() == dest.getX() - 1) {
+				if (p.getPlayer() == WHITE) {
+					takePiece(board.getSquare(dest.getX(), dest.getY() - 1));
+				} else {
+					takePiece(board.getSquare(dest.getX(), dest.getY() + 1));
+				}
+			}
 		}
+	}
+	
+	/**
+	 * Takes the piece at the specified square, marking it as taken
+	 * @param sq the square containing the piece to take
+	 */
+	public void takePiece(Square sq) {
+		Piece p = sq.removePiece();
+		int player = p.getPlayer();
+		if (player == WHITE) {
+			takenWhitePieces.add(p);
+		} else {
+			takenBlackPieces.add(p);
+		}
+		p.setTaken(true);
 	}
 	
 	/**
@@ -220,6 +248,10 @@ public class Game {
 			if (willResultInCheck(p.getLocation(), move)) {
 				iter.remove();
 			}
+		}
+		if (p instanceof King) {
+			King k = (King) p;
+			checkForCastling(k, moves);
 		}
 		return moves;
 	}
@@ -276,6 +308,37 @@ public class Game {
 		return board;
 	}
 	
+	public void checkForCastling(King k, List<String> moves) {
+		if (!k.hasMoved()) {
+			int x = k.getX();
+			int y = k.getY();
+			int opponent = opponent(k.getPlayer());
+            if (!board.squareIsThreatened(x, y, opponent)) {
+                Square leftCastle = board.getSquare(x - 2, y);
+                Square rightCastle = board.getSquare(x + 2, y);
+
+                if (!board.getSquare(x - 1, y).hasPiece() && !board.getSquare(x - 2, y).hasPiece() && !board.getSquare(x - 3, y).hasPiece()) {
+                    if (board.getSquare(x - 4, y).hasPiece()) {
+                        if (!board.getSquare(x - 4, y).getPiece().hasMoved()) {
+                            if (!board.squareIsThreatened(x - 1, y, opponent) && !board.squareIsThreatened(x - 2, y, opponent)) {
+                                moves.add(leftCastle.getLoc());
+                            }
+                        }
+                    }
+                }
+                if (!board.getSquare(x + 1, y).hasPiece() && !board.getSquare(x + 2, y).hasPiece()) {
+                    if (board.getSquare(x + 3, y).hasPiece()) {
+                        if (!board.getSquare(x + 3, y).getPiece().hasMoved()) {
+                            if (!board.squareIsThreatened(x + 1, y, opponent) && !board.squareIsThreatened(x + 2, y, opponent)) {
+                                moves.add(rightCastle.getLoc());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+	}
+	
 	/**
 	 * Simulates the following move to check if this will land a player in check
 	 * @param square1 the square with the piece to move
@@ -286,9 +349,17 @@ public class Game {
 		Square src = board.getSquare(square1);
 		Square dest = board.getSquare(square2);
 		Piece p = src.removePiece();
+		Piece takenPiece = dest.removePiece();
+		if (takenPiece != null) {
+			takenPiece.setTaken(true);
+		}
 		dest.placePiece(p);
 		boolean check = isInCheck(p.getPlayer());
 		dest.removePiece();
+		if (takenPiece != null) {
+			takenPiece.setTaken(false);
+			dest.placePiece(takenPiece);
+		}
 		src.placePiece(p);
 		return check;
 	}

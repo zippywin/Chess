@@ -247,6 +247,47 @@ public class Main {
     	assert(g.getValidMoves(board.getPiece("D8")).size() == 1);
     	assert(g.getValidMoves(board.getPiece("F8")).size() == 0);
     	
+    	g.makeMove("C8", "D7");
+    	g.makeMove("G1", "F3");
+    	
+    	g.printGame();
+    	assert(g.isInCheck(Game.BLACK) == false);
+    	assert(g.willResultInCheck("D7", "C6") == false);
+    	assert(g.willResultInCheck("D7", "C8") == true);
+    	assert(g.willResultInCheck("D7", "B5") == false);
+    	assert(g.getValidMoves(board.getPiece("B7")).size() == 1);
+    	assert(g.getValidMoves(board.getPiece("C7")).size() == 2);
+    	assert(g.getValidMoves(board.getPiece("D7")).size() == 2);
+    	assert(g.getValidMoves(board.getPiece("E8")).size() == 1);
+    	assert(g.getValidMoves(board.getPiece("D8")).size() == 6);
+    	assert(g.getValidMoves(board.getPiece("F8")).size() == 5);
+    	
+    	System.out.println("Passed!");
+    	
+    	g.makeMove("H7","H6");
+    	
+    	System.out.println("Testing Castling + En Passant again");
+    	assert(g.getPiece("E1").hasMoved() == false);
+    	assert(g.getPiece("H1").hasMoved() == false);
+    	assert(board.squareIsThreatened(4, 0, Game.BLACK) == false);
+    	assert(g.getValidMoves(board.getPiece("E1")).contains("G1"));
+    	g.makeMove("E1", "G1");
+    	assert(board.getPiece("E1") == null);
+    	assert(board.getPiece("H1") == null);
+    	assert(board.getPiece("G1") instanceof King);
+    	assert(board.getPiece("F1") instanceof Rook);
+    	g.printGame();
+    	
+    	g.makeMove("F7", "F5");
+    	g.printGame();
+    	assert(g.getValidMoves(board.getPiece("E5")).contains("F6"));
+    	assert(g.getPiece("F5") instanceof Pawn);
+    	g.makeMove("E5", "F6");
+    	assert(g.getPiece("F5") == null);
+    	g.printGame();
+    	
+    	System.out.println("Passed!");
+    	
     	System.out.println("All tests passed! You are awesome!");
     }
 }

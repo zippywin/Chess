@@ -61,5 +61,17 @@ public interface Piece {
      * Returns whether or not the piece has moved
      * @return true if the piece has moved, false otherwise
      */
-    public boolean isHasMoved();
+    public boolean hasMoved();
+    
+    /**
+     * Returns true if this piece has been taken
+     * @return true if this piece has been taken
+     */
+    public boolean hasBeenTaken();
+    
+    /**
+     * Sets the taken status of this piece to the specified value
+     * @param taken the status to set to
+     */
+    public void setTaken(boolean taken);
 }

@@ -17,6 +17,7 @@ public class Pawn implements Piece{
     private boolean hasMoved;
     private int x;
     private int y;
+    private boolean taken;
     
     public Pawn (Chessboard chessboard, int x, int y, int colour) {
         this.x = x;
@@ -24,6 +25,7 @@ public class Pawn implements Piece{
         this.chessboard = chessboard;
         this.colour = colour;
         hasMoved = false;
+        taken = false;
     }
     
     @Override
@@ -64,7 +66,7 @@ public class Pawn implements Piece{
 	}
 
     @Override
-    public boolean isHasMoved() {
+    public boolean hasMoved() {
         return hasMoved;
     }
 
@@ -81,7 +83,8 @@ public class Pawn implements Piece{
 			doubleForward = chessboard.getSquare(x, y + 1);
 		} else {
 			y--;
-			forward = chessboard.getSquare(x, y - 1);
+			forward = chessboard.getSquare(x, y);
+			doubleForward = chessboard.getSquare(x, y - 1);
 		}
 		
 		if (forward != null && !forward.hasPiece()) {
@@ -112,5 +115,15 @@ public class Pawn implements Piece{
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean hasBeenTaken() {
+		return taken;
+	}
+
+	@Override
+	public void setTaken(boolean taken) {
+		this.taken = taken;
 	}
 }
