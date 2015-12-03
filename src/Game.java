@@ -116,12 +116,12 @@ public class Game {
 		}
 		dest.placePiece(p);
 		//En Passant logic
-		//First check if en passant was available, and if it was, disable it.
+		//First check if en passant was available, and if it was, unmark it.
 		if (enPassantableSquare != null) {
 			enPassantableSquare.setEnPassantable(false);
 			enPassantableSquare = null;
 		}
-		//Then check if a pawn was double stepped. If it was, enable the square
+		//Then check if a pawn was double stepped. If it was, mark the square
 		//in between the double step for an en passant move
 		if (p instanceof Pawn) {
 			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
@@ -278,5 +278,13 @@ public class Game {
 	
 	public Piece getPiece(String loc) {
 		return board.getPiece(loc);
+	}
+	
+	/**
+	 * Returns true if the specified player has no moves left
+	 * @return true if the specified player has no moves left
+	 */
+	public boolean noMovesLeft(int player) {
+		return false;
 	}
 }

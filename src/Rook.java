@@ -77,6 +77,7 @@ public class Rook implements Piece {
 		return y;
 	}
 
+	@Override
     public boolean isHasMoved() {
         return hasMoved;
     }
