@@ -106,7 +106,6 @@ public class Game {
 	public void makeMove(String square1, String square2) {
 		Square src = board.getSquare(square1);
 		Square dest = board.getSquare(square2);
-        //TODO: Add castling movements special condition
 		
 		Piece p = src.removePiece();
 		p.move(dest.getX(), dest.getY());
@@ -126,6 +125,24 @@ public class Game {
 		if (p instanceof Pawn) {
 			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
 		}
+
+        //Castling logic here
+        if (p instanceof King) {
+            if (src.getX() - 2 == dest.getX()) {
+                Square leftSquare = board.getSquare(src.getX() - 4, src.getY());
+                Piece leftRook = leftSquare.removePiece();
+                Square leftCastleRookDest = board.getSquare(src.getX() - 1, src.getY());
+                leftRook.move(leftCastleRookDest.getX(), leftCastleRookDest.getY());
+                leftCastleRookDest.placePiece(leftRook);
+
+            } else if (src.getX() + 2 == dest.getX()) {
+                Square rightSquare = board.getSquare(src.getX() + 3, src.getY());
+                Piece rightRook = rightSquare.removePiece();
+                Square rightCastleRookDest = board.getSquare(src.getX() + 1, src.getY());
+                rightRook.move(rightCastleRookDest.getX(), rightCastleRookDest.getY());
+                rightCastleRookDest.placePiece(rightRook);
+            }
+        }
 		nextTurn();
 	}
 	
