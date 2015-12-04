@@ -66,36 +66,37 @@ public class Pawn implements Piece{
     @Override
 	public List<String> getValidMoves() {
 		List<String> validMoves = new LinkedList<String>();
-		int x = this.x;
-		int y = this.y;
-		Square forward = null;
-		Square doubleForward = null;
-		if (colour == Game.WHITE) {
-			y++;
-			forward = chessboard.getSquare(x, y);
-			doubleForward = chessboard.getSquare(x, y + 1);
-		} else {
-			y--;
-			forward = chessboard.getSquare(x, y);
-			doubleForward = chessboard.getSquare(x, y - 1);
+		if (this.hasBeenTaken() == false) {
+			int x = this.x;
+			int y = this.y;
+			Square forward = null;
+			Square doubleForward = null;
+			if (colour == Game.WHITE) {
+				y++;
+				forward = chessboard.getSquare(x, y);
+				doubleForward = chessboard.getSquare(x, y + 1);
+			} else {
+				y--;
+				forward = chessboard.getSquare(x, y);
+				doubleForward = chessboard.getSquare(x, y - 1);
+			}
+			
+			if (forward != null && !forward.hasPiece()) {
+				validMoves.add(forward.getLoc());
+			}
+			if (!hasMoved && doubleForward != null && !doubleForward.hasPiece()) {
+				validMoves.add(doubleForward.getLoc());
+			}
+			
+			Square leftDiagonal = chessboard.getSquare(x - 1, y);
+			if (leftDiagonal != null && diagonalSquareValid(leftDiagonal) == true) {
+				validMoves.add(leftDiagonal.getLoc());
+			} 
+			Square rightDiagonal = chessboard.getSquare(x + 1, y);
+			if (rightDiagonal != null && diagonalSquareValid(rightDiagonal) == true) {
+				validMoves.add(rightDiagonal.getLoc());
+			}
 		}
-		
-		if (forward != null && !forward.hasPiece()) {
-			validMoves.add(forward.getLoc());
-		}
-		if (!hasMoved && doubleForward != null && !doubleForward.hasPiece()) {
-			validMoves.add(doubleForward.getLoc());
-		}
-		
-		Square leftDiagonal = chessboard.getSquare(x - 1, y);
-		if (leftDiagonal != null && diagonalSquareValid(leftDiagonal) == true) {
-			validMoves.add(leftDiagonal.getLoc());
-		} 
-		Square rightDiagonal = chessboard.getSquare(x + 1, y);
-		if (rightDiagonal != null && diagonalSquareValid(rightDiagonal) == true) {
-			validMoves.add(rightDiagonal.getLoc());
-		}
-		
 		return validMoves;
 	}
 	
@@ -118,5 +119,11 @@ public class Pawn implements Piece{
 	@Override
 	public void setTaken(boolean taken) {
 		this.taken = taken;
+	}
+	
+	@Override
+	public void setLocation(int x, int y) {
+		this.x=x;
+		this.y=y;
 	}
 }

@@ -16,6 +16,14 @@ public class Main {
     		g.printGame();
     		queryInput(g,sc);
     	}
+    	int winner = g.getWinner();
+    	if (winner == Game.NOONE) {
+    		System.out.println("Stalemate! No-one wins!");
+    	} else if (winner == Game.WHITE) {
+    		System.out.println("Checkmate! The winner is White Player!");
+    	} else {
+    		System.out.println("Checkmate! The winner is Black Player!");
+    	}
     }
     
     /**
@@ -287,6 +295,23 @@ public class Main {
     	g.printGame();
     	
     	System.out.println("Passed!");
+    	
+    	System.out.println("Testing checkmate");
+    	g = new Game();
+    	board = g.getBoard();
+    	g.makeMove("E2", "E4");
+    	g.makeMove("E7", "E5");
+    	g.makeMove("D1", "H5");
+    	g.makeMove("B8", "C6");
+    	g.makeMove("F1", "C4");
+    	g.makeMove("G8", "F6");
+    	g.makeMove("H5", "F7");
+    	g.printGame();
+    	assert(g.getValidMoves(g.getKing(Game.BLACK)).isEmpty());
+    	assert(g.isInCheck(Game.BLACK));
+    	assert(g.noMovesLeft(Game.BLACK));
+    	assert(g.gameIsOver() == true);
+    	assert(g.getWinner() == Game.WHITE);
     	
     	System.out.println("All tests passed! You are awesome!");
     }

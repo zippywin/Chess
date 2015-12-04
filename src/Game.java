@@ -146,6 +146,14 @@ public class Game {
                 rightCastleRookDest.placePiece(rightRook);
             }
         }
+        if (noMovesLeft(opponent(activePlayer))) {
+        	gameOver = true;
+        	if (isInCheck(opponent(activePlayer))) {
+        		winner = activePlayer;
+        	} else {
+        		winner = NOONE;
+        	}
+        }
 		nextTurn();
 	}
 	
@@ -354,6 +362,7 @@ public class Game {
 			takenPiece.setTaken(true);
 		}
 		dest.placePiece(p);
+		p.setLocation(dest.getX(), dest.getY());
 		boolean check = isInCheck(p.getPlayer());
 		dest.removePiece();
 		if (takenPiece != null) {
@@ -361,6 +370,7 @@ public class Game {
 			dest.placePiece(takenPiece);
 		}
 		src.placePiece(p);
+		p.setLocation(src.getX(), src.getY());
 		return check;
 	}
 	
@@ -373,6 +383,11 @@ public class Game {
 	 * @return true if the specified player has no moves left
 	 */
 	public boolean noMovesLeft(int player) {
-		return false;
+		for (Piece p : board.getPiecesOwnedBy(player)) {
+			if (p.hasBeenTaken() == false && this.getValidMoves(p).size() > 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

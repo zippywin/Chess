@@ -126,4 +126,10 @@ public class King implements Piece {
 	public void setTaken(boolean taken) {
 		this.taken = taken;
 	}
+	
+	@Override
+	public void setLocation(int x, int y) {
+		this.x=x;
+		this.y=y;
+	}
 }

@@ -36,23 +36,24 @@ public class Queen implements Piece {
     public List<String> getValidMoves() {
         List<String> possibleMoves = new ArrayList<String>();
         List<Square> emptySquares = new ArrayList<Square>();
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTH));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHEAST));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.EAST));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHEAST));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTH));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHWEST));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.WEST));
-        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHWEST));
-
-        for (Square square : emptySquares) {
-            if (!square.hasPiece()) {
-                possibleMoves.add(square.getLoc());
-            } else if (square.getPiece().getPlayer() != colour) {
-                possibleMoves.add(square.getLoc());
-            }
+        if (this.hasBeenTaken() == false) {
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTH));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHEAST));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.EAST));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHEAST));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTH));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.SOUTHWEST));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.WEST));
+	        emptySquares.addAll(chessboard.getEmptySquaresToPiece(x, y, Chessboard.NORTHWEST));
+	
+	        for (Square square : emptySquares) {
+	            if (!square.hasPiece()) {
+	                possibleMoves.add(square.getLoc());
+	            } else if (square.getPiece().getPlayer() != colour) {
+	                possibleMoves.add(square.getLoc());
+	            }
+	        }
         }
-
         return possibleMoves;
     }
 
@@ -91,5 +92,11 @@ public class Queen implements Piece {
 	@Override
 	public void setTaken(boolean taken) {
 		this.taken = taken;
+	}
+	
+	@Override
+	public void setLocation(int x, int y) {
+		this.x=x;
+		this.y=y;
 	}
 }

@@ -16,6 +16,7 @@ public interface Piece {
 
     /**
      * Returns a list of all the valid squares a piece can move to.
+     * If this piece has been taken, this should return an empty list
      * @return  list of squares a piece can move to
      */
 	public List<String> getValidMoves();
@@ -65,4 +66,12 @@ public interface Piece {
      * @param taken the status to set to
      */
     public void setTaken(boolean taken);
+
+    /**
+     * Sets the location of this piece to the specified coordinates.
+     * This is different from move() in that it doesn't count as a move
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
+	public void setLocation(int x, int y);
 }

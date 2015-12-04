@@ -35,21 +35,23 @@ public class Knight implements Piece{
     @Override
     public List<String> getValidMoves() {
     	List<String> validMoves = new LinkedList<String>();
-    	List<Square> possibleSquares = new LinkedList<Square>();
-    	
-    	possibleSquares.add(chessboard.getSquare(x+2,y+1));
-    	possibleSquares.add(chessboard.getSquare(x-2,y+1));
-    	possibleSquares.add(chessboard.getSquare(x-2,y-1));
-    	possibleSquares.add(chessboard.getSquare(x+2,y-1));
-    	possibleSquares.add(chessboard.getSquare(x+1,y+2));
-    	possibleSquares.add(chessboard.getSquare(x-1,y+2));
-    	possibleSquares.add(chessboard.getSquare(x-1,y-2));
-    	possibleSquares.add(chessboard.getSquare(x+1,y-2));
-    	
-    	for (Square sq : possibleSquares) {
-    		if (sq != null && (!sq.hasPiece() || sq.getPiece().getPlayer() != colour)) {
-    			validMoves.add(sq.getLoc());
-    		}
+    	if (this.hasBeenTaken() == false) {
+	    	List<Square> possibleSquares = new LinkedList<Square>();
+	    	
+	    	possibleSquares.add(chessboard.getSquare(x+2,y+1));
+	    	possibleSquares.add(chessboard.getSquare(x-2,y+1));
+	    	possibleSquares.add(chessboard.getSquare(x-2,y-1));
+	    	possibleSquares.add(chessboard.getSquare(x+2,y-1));
+	    	possibleSquares.add(chessboard.getSquare(x+1,y+2));
+	    	possibleSquares.add(chessboard.getSquare(x-1,y+2));
+	    	possibleSquares.add(chessboard.getSquare(x-1,y-2));
+	    	possibleSquares.add(chessboard.getSquare(x+1,y-2));
+	    	
+	    	for (Square sq : possibleSquares) {
+	    		if (sq != null && (!sq.hasPiece() || sq.getPiece().getPlayer() != colour)) {
+	    			validMoves.add(sq.getLoc());
+	    		}
+	    	}
     	}
     	return validMoves;
     }
@@ -90,5 +92,10 @@ public class Knight implements Piece{
 	public void setTaken(boolean taken) {
 		this.taken = taken;
 	}
-    
+	
+	@Override
+	public void setLocation(int x, int y) {
+		this.x=x;
+		this.y=y;
+	}
 }
