@@ -33,11 +33,6 @@ public class Queen implements Piece {
     }
 
     @Override
-    public boolean isValidMove(int x, int y) {
-        return true;
-    }
-
-    @Override
     public List<String> getValidMoves() {
         List<String> possibleMoves = new ArrayList<String>();
         List<Square> emptySquares = new ArrayList<Square>();

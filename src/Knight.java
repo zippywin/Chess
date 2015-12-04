@@ -33,11 +33,6 @@ public class Knight implements Piece{
     }
 
     @Override
-    public boolean isValidMove(int x, int y) {
-        return true;
-    }
-
-    @Override
     public List<String> getValidMoves() {
     	List<String> validMoves = new LinkedList<String>();
     	List<Square> possibleSquares = new LinkedList<Square>();

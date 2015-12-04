@@ -66,25 +66,8 @@ public class King implements Piece {
     }
 
     @Override
-    public boolean isValidMove(int x, int y) {
-        /*
-        Rough steps to check for valid move:
-        Check if square is out of bounds
-        Check if square's destination is already occupied by another piece of the same colour
-        Check if square is within Piece's movement range
-        Check for obstructions on the way to destination
-        KING Exceptions:
-        Check if the move will put it in check
-        Check castle requirements
-         */
-
-        return true;
-    }
-
-    @Override
     public List<String> getValidMoves() {
         List<String> possibleMoves = new ArrayList<String>();
-
         List<Square> adjacentSquares = new ArrayList<Square>();
 
         for (int i = -1; i < 2; i++) {
@@ -96,17 +79,6 @@ public class King implements Piece {
                 }
             }
         }
-
-        /*
-        adjacentSquares.add(chessboard.getSquare(x-1,y-1));
-        adjacentSquares.add(chessboard.getSquare(x-1,y));
-        adjacentSquares.add(chessboard.getSquare(x-1,y+1));
-        adjacentSquares.add(chessboard.getSquare(x,y-1));
-        adjacentSquares.add(chessboard.getSquare(x,y+1));
-        adjacentSquares.add(chessboard.getSquare(x+1,y-1));
-        adjacentSquares.add(chessboard.getSquare(x+1,y));
-        adjacentSquares.add(chessboard.getSquare(x+1,y+1));
-        */
 
         for (Square square : adjacentSquares) {
             if (!square.hasPiece()) {

@@ -13,15 +13,6 @@ public interface Piece {
 	 * @return the location of the piece
 	 */
 	public String getLocation();
-	
-	/**
-	 * Returns true if the piece can move to the given square
-	 * @param x the 'file' coordinate
-     * @param y the 'rank' coordinate
-	 * @return true if moving to the square is valid 
-	 */
-	public boolean isValidMove(int x, int y);
-
 
     /**
      * Returns a list of all the valid squares a piece can move to.

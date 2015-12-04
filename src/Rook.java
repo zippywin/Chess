@@ -31,11 +31,6 @@ public class Rook implements Piece {
         int rank = y+1;
     	return ""+file+rank;
     }
-    
-    @Override
-    public boolean isValidMove(int x, int y) {
-        return true;
-    }
 
     @Override
     public List<String> getValidMoves() {
