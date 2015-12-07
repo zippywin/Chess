@@ -1,6 +1,8 @@
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * A class responsible for handling user actions 
@@ -124,9 +126,10 @@ public class Game {
 		//Then check if a pawn was double stepped. If it was, mark the square
 		//in between the double step for an en passant move
 		if (p instanceof Pawn) {
+			Pawn pawn = (Pawn) p;
 			checkIfPawnDoubleStepped(src, dest, p.getPlayer());
 			checkIfPawnEnPassanted(src, dest, previousEnPassantableSquare, (Pawn) p);
-			//checkifPawnPromoted(p);
+			checkIfPawnPromoted(pawn);
 		}
 
         //Castling logic here
@@ -195,6 +198,52 @@ public class Game {
 					takePiece(board.getSquare(dest.getX(), dest.getY() + 1));
 				}
 			}
+		}
+	}
+	
+	/**
+	 * Checks if the pawn was moved into the last rank, and if it has, prompts the player to 
+	 * promote the pawn to a piece
+	 * @param p The pawn to be promoted
+	 */
+	public void checkIfPawnPromoted(Pawn p) {
+		int player = p.getPlayer();
+		int file = p.getX();
+		int rank = p.getY();
+		Scanner sc = new Scanner(System.in);
+		boolean isInLastRank = false;
+		if (player == WHITE) {
+			if (rank == 7) {
+				isInLastRank = true;
+				System.out.println("White player. Choose a type to promote your pawn to (Q - Queen, R - Rook, N - Knight, B - Bishop):");
+			}
+		} else {
+			if (rank == 0) {
+				isInLastRank = true;
+				System.out.println("Black player. Choose a type to promote your pawn to (Q - Queen, R - Rook, N - Knight, B - Bishop):");
+			}
+		}
+		if (isInLastRank == true) {
+			Pattern pattern = Pattern.compile("[QRNBqrnb]");
+			String s = sc.next(pattern);
+			s.toUpperCase();
+			Piece newPiece = null;
+			if (s.equals("Q")) {
+				newPiece = new Queen(board, p.getX(), p.getY(), p.getPlayer());
+			} else if (s.equals("R")) {
+				newPiece = new Rook(board, p.getX(), p.getY(), p.getPlayer());
+			} else if (s.equals("N")) {
+				newPiece = new Knight(board, p.getX(), p.getY(), p.getPlayer());
+			} else if (s.equals("B")) {
+				newPiece = new Bishop(board, p.getX(), p.getY(), p.getPlayer());
+			} else {
+				try {
+					throw new Exception("Error, could not parse");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			board.getSquare(p.getX(), p.getY()).placePiece(newPiece);
 		}
 	}
 	
@@ -320,14 +369,16 @@ public class Game {
 		if (!k.hasMoved()) {
 			int x = k.getX();
 			int y = k.getY();
-			int opponent = opponent(k.getPlayer());
+			int player = k.getPlayer();
+			int opponent = opponent(player);
             if (!board.squareIsThreatened(x, y, opponent)) {
                 Square leftCastle = board.getSquare(x - 2, y);
                 Square rightCastle = board.getSquare(x + 2, y);
 
                 if (!board.getSquare(x - 1, y).hasPiece() && !board.getSquare(x - 2, y).hasPiece() && !board.getSquare(x - 3, y).hasPiece()) {
-                    if (board.getSquare(x - 4, y).hasPiece()) {
-                        if (!board.getSquare(x - 4, y).getPiece().hasMoved()) {
+                    Piece p = board.getPiece(x - 4, y);
+                	if (p != null && p instanceof Rook && p.getPlayer() == player) {
+                        if (!p.hasMoved()) {
                             if (!board.squareIsThreatened(x - 1, y, opponent) && !board.squareIsThreatened(x - 2, y, opponent)) {
                                 moves.add(leftCastle.getLoc());
                             }
@@ -335,8 +386,9 @@ public class Game {
                     }
                 }
                 if (!board.getSquare(x + 1, y).hasPiece() && !board.getSquare(x + 2, y).hasPiece()) {
-                    if (board.getSquare(x + 3, y).hasPiece()) {
-                        if (!board.getSquare(x + 3, y).getPiece().hasMoved()) {
+                    Piece p = board.getPiece(x + 3, y);
+                	if (p != null && p instanceof Rook && p.getPlayer() == player) {
+                        if (!p.hasMoved()) {
                             if (!board.squareIsThreatened(x + 1, y, opponent) && !board.squareIsThreatened(x + 2, y, opponent)) {
                                 moves.add(rightCastle.getLoc());
                             }

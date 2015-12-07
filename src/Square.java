@@ -45,9 +45,7 @@ public class Square {
 	 * @param piece the piece to be placed
 	 */
 	public void placePiece(Piece piece) {
-		if (this.piece == null) {
-			this.piece = piece;
-		}
+		this.piece = piece;
 	}
 	
 	/**

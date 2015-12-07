@@ -297,6 +297,7 @@ public class Main {
     	System.out.println("Passed!");
     	
     	System.out.println("Testing checkmate");
+    	System.out.println("Creating a new board and doing scholar's mate:");
     	g = new Game();
     	board = g.getBoard();
     	g.makeMove("E2", "E4");
